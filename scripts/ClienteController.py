@@ -1,6 +1,6 @@
 from DAO import Database
 import sqlite3
-from model.Cliente import Cliente
+from scripts.model.Cliente import Cliente
 
 class ClienteController:
     def __init__(self):
