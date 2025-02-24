@@ -1,0 +1,1 @@
+# Esta carpeta contiene los ficheros de interfaz de las pantallas directamente del designer
