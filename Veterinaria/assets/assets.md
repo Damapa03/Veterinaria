@@ -1,1 +1,0 @@
-# Esta carpeta contiene las imagenes e iconos que vayan a ser usadas
