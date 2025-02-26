@@ -6,7 +6,7 @@ def initialize_database():
     cursor = conn.cursor()
     
     # Lee el script Sql
-    with open('veterinary_database.sql', 'r') as sql_file:
+    with open('veterinaria_db.sql', 'r') as sql_file:
         sql_script = sql_file.read()
     
     # Ejecuta el script
