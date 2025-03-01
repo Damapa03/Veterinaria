@@ -1,4 +1,4 @@
-from DAO import Database
+from scripts.DAO import Database
 import sqlite3
 from scripts.model.Clinica import Clinica
 
