@@ -1,11 +1,11 @@
-from typing import Optional
-
 class Clinica:
-    def __init__(self, id: Optional[int] = None, municipio: str = "", provincia: str = "", name: str = ""):
+    """Clase que representa una clínica veterinaria"""
+
+    def __init__(self, id=None, name=None, municipio=None, provincia=None):
         self.id = id
+        self.name = name
         self.municipio = municipio
         self.provincia = provincia
-        self.name = name
-        
+
     def __str__(self):
-        return f"{self.name} - {self.municipio}, {self.provincia}"
+        return f"Clínica: {self.name} - {self.municipio}, {self.provincia}"

@@ -1,46 +1,49 @@
 import os
 import sys
+
 from PyQt6 import QtWidgets, uic
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QWidget, QHBoxLayout, QLabel, QPushButton, QFrame, QVBoxLayout, QMessageBox
-from typing import List, Optional
+from PyQt6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QFrame
 
 from scripts.DAO import Database
 from scripts.model.Veterinario import Veterinario
 from scripts.repositories.VeterinarioRepository import VeterinarioRepository
+from scripts.ui_functionality.veterinario.veterinario_information import VeterinarioDetailWindow
 
-# Main window class
+
 class VeterinariosMainWindow(QtWidgets.QMainWindow):
+    """Ventana principal para la gestión de veterinarios"""
+
     def __init__(self):
         super().__init__()
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir,'../../../ui/veterinarios_main.ui')
+        ui_path = os.path.join(current_dir, '../../../ui/veterinarios_main.ui')
         uic.loadUi(ui_path, self)
 
-        # Store database connection
+        # Inicializar repositorio
         self.veterinarioRepository = VeterinarioRepository()
-        
-        # Set window title
+
+        # Configurar título de la ventana
         self.setWindowTitle("Veterinarios")
 
-        # Connect button signals
+        # Conectar señales de botones
         self.crearButton.clicked.connect(self.on_crear_clicked)
         self.volverButton.clicked.connect(self.on_volver_clicked)
-        
-        # Populate the veterinarians list
+
+        # Cargar la lista de veterinarios
         self.load_veterinarios()
 
     def load_veterinarios(self):
-        # Clear existing items from the layout
+        """Cargar y mostrar la lista de veterinarios desde la base de datos"""
+        # Limpiar elementos existentes del layout
         self.clear_rows_layout()
-        
-        # Get veterinarians from database
+
+        # Obtener veterinarios de la base de datos
         veterinarios_data = self.veterinarioRepository.getVeterinarios()
-        
-        # Create veterinario objects
+
+        # Crear objetos veterinario
         veterinarios = []
         for vet_data in veterinarios_data:
-            # Assuming column order: DNI, name, surname, email, telephone, password, location
+            # Orden de columnas: DNI, name, surname, email, telephone, password, location
             veterinario = Veterinario(
                 dni=vet_data[0],
                 name=vet_data[1],
@@ -51,84 +54,84 @@ class VeterinariosMainWindow(QtWidgets.QMainWindow):
                 location=vet_data[6] if len(vet_data) > 6 else None
             )
             veterinarios.append(veterinario)
-        
-        # Create row for each veterinarian
+
+        # Crear fila para cada veterinario
         for veterinario in veterinarios:
             self.add_veterinario_row(veterinario)
-        
-        # Add stretching space at the bottom to push rows to the top
+
+        # Añadir espacio de estiramiento al final para empujar filas hacia arriba
         self.rows.addStretch()
-    
+
     def clear_rows_layout(self):
-        # Remove all widgets from the layout
+        """Eliminar todos los widgets del layout de filas"""
         while self.rows.count():
             item = self.rows.takeAt(0)
             widget = item.widget()
             if widget:
                 widget.deleteLater()
-    
+
     def add_veterinario_row(self, veterinario: Veterinario):
-        # Create frame for the row
+        """Añadir una fila para un veterinario en la lista"""
+        # Crear marco para la fila
         row_frame = QFrame()
         row_frame.setFrameShape(QFrame.Shape.StyledPanel)
         row_frame.setLineWidth(1)
         row_frame.setMinimumHeight(50)
-        
-        # Create horizontal layout for the row
+
+        # Crear layout horizontal para la fila
         row_layout = QHBoxLayout(row_frame)
-        
-        # Create label with veterinarian info
+
+        # Crear etiqueta con información del veterinario
         info_text = f"{veterinario.name} {veterinario.surname} (DNI: {veterinario.dni})"
         info_label = QLabel(info_text)
         info_label.setStyleSheet("font-size: 12px;")
-        
-        # Create "Más" button
+
+        # Crear botón "Más"
         mas_button = QPushButton("Más")
         mas_button.setFixedWidth(60)
-        
-        # Connect button to show details
+
+        # Conectar botón para mostrar detalles
         mas_button.clicked.connect(lambda checked, v=veterinario: self.show_veterinario_details(v))
-        
-        # Add widgets to row layout
+
+        # Añadir widgets al layout de fila
         row_layout.addWidget(info_label)
         row_layout.addStretch()
         row_layout.addWidget(mas_button)
-        
-        # Add row to main vertical layout
+
+        # Añadir fila al layout vertical principal
         self.rows.addWidget(row_frame)
-    
+
     def show_veterinario_details(self, veterinario: Veterinario):
-        # This would open a detailed view of the veterinarian
-        # For now, just show a message box with details
-        details = (f"DNI: {veterinario.dni}\n"
-                  f"Nombre: {veterinario.name}\n"
-                  f"Apellidos: {veterinario.surname}\n"
-                  f"Email: {veterinario.email}\n"
-                  f"Teléfono: {veterinario.telephone}\n"
-                  f"Ubicación: {veterinario.location if veterinario.location else 'No asignada'}")
-        
-        QMessageBox.information(self, f"Detalles de {veterinario.name}", details)
-    
+        """Mostrar la ventana de detalles para un veterinario específico"""
+        self.detail_window = VeterinarioDetailWindow(self, veterinario)
+        self.detail_window.show()
+        self.hide()
+
     def on_crear_clicked(self):
-        # This would open a dialog to create a new veterinarian
-        QMessageBox.information(self, "Crear Veterinario", "Aquí se abriría el formulario para crear un nuevo veterinario.")
-    
+        """Abrir la ventana para crear un nuevo veterinario"""
+        from veterinario_create import VeterinarioCreateWindow
+        self.create_window = VeterinarioCreateWindow(self)
+        self.create_window.show()
+        self.hide()
+
     def on_volver_clicked(self):
-        # This would go back to previous screen
+        """Volver a la pantalla anterior"""
         self.close()
 
-# Main application
+
 def main():
+    """Función principal para iniciar la aplicación"""
     app = QtWidgets.QApplication(sys.argv)
-    
-    # Create database connection
-    db = Database("veterinaria_clinic")  # Initialize your database
-    
-    # Create and show main window
+
+    # Crear conexión a la base de datos
+    db = Database()
+
+    # Crear y mostrar ventana principal
     window = VeterinariosMainWindow()
     window.show()
-    
+
     sys.exit(app.exec())
+
 
 if __name__ == "__main__":
     main()

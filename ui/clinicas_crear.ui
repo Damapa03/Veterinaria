@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Crear Veterinario</string>
+   <string>Crear Clínica</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="volverButton">
@@ -45,7 +45,7 @@
      <rect>
       <x>40</x>
       <y>30</y>
-      <width>352</width>
+      <width>721</width>
       <height>139</height>
      </rect>
     </property>
@@ -57,14 +57,14 @@
       <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
      <item row="0" column="0">
-      <widget class="QLabel" name="dniLabel">
+      <widget class="QLabel" name="idLabel">
        <property name="text">
-        <string>DNI:</string>
+        <string>ID:</string>
        </property>
       </widget>
      </item>
      <item row="0" column="1">
-      <widget class="QLineEdit" name="dniInput"/>
+      <widget class="QLineEdit" name="idInput"/>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="nameLabel">
@@ -77,70 +77,24 @@
       <widget class="QLineEdit" name="nameInput"/>
      </item>
      <item row="2" column="0">
-      <widget class="QLabel" name="surnameLabel">
+      <widget class="QLabel" name="municipioLabel">
        <property name="text">
-        <string>Apellidos:</string>
+        <string>Municipio:</string>
        </property>
       </widget>
      </item>
      <item row="2" column="1">
-      <widget class="QLineEdit" name="surnameInput"/>
+      <widget class="QLineEdit" name="municipioInput"/>
      </item>
      <item row="3" column="0">
-      <widget class="QLabel" name="emailLabel">
+      <widget class="QLabel" name="provinciaLabel">
        <property name="text">
-        <string>Email:</string>
+        <string>Provincia:</string>
        </property>
       </widget>
      </item>
      <item row="3" column="1">
-      <widget class="QLineEdit" name="emailInput"/>
-     </item>
-    </layout>
-   </widget>
-   <widget class="QWidget" name="formLayoutWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>390</x>
-      <y>30</y>
-      <width>331</width>
-      <height>139</height>
-     </rect>
-    </property>
-    <layout class="QFormLayout" name="formLayout_2">
-     <item row="2" column="0">
-      <widget class="QLabel" name="clinicaLabel">
-       <property name="text">
-        <string>Clínica:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QComboBox" name="clinicaComboBox"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="telephoneLabel">
-       <property name="text">
-        <string>Teléfono:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="telephoneInput"/>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="passwordLabel">
-       <property name="text">
-        <string>Contraseña:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="passwordInput">
-       <property name="echoMode">
-        <enum>QLineEdit::EchoMode::Password</enum>
-       </property>
-      </widget>
+      <widget class="QLineEdit" name="provinciaInput"/>
      </item>
     </layout>
    </widget>

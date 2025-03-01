@@ -4,7 +4,7 @@ from scripts.model.Veterinario import Veterinario
 
 class VeterinarioRepository:
     def __init__(self):
-        self.db = Database("database/veterinary_clinic.db")
+        self.db = Database()
         
     def getVeterinarios(self):
         self.db.cursor.execute("SELECT * FROM Veterinario")
