@@ -35,13 +35,12 @@ class ClinicaCreateWindow(QtWidgets.QMainWindow):
     def on_aceptar_clicked(self):
         """Crear una nueva clínica con los datos del formulario"""
         # Recoger valores del formulario
-        id_value = self.idInput.text().strip()
         name_value = self.nameInput.text().strip()
         municipio_value = self.municipioInput.text().strip()
         provincia_value = self.provinciaInput.text().strip()
 
         # Validar datos
-        if not id_value or not name_value or not municipio_value or not provincia_value:
+        if not name_value or not municipio_value or not provincia_value:
             QMessageBox.warning(self, "Datos incompletos",
                                 "Todos los campos son obligatorios")
             return
@@ -49,14 +48,14 @@ class ClinicaCreateWindow(QtWidgets.QMainWindow):
         try:
             # Crear objeto clínica
             clinica = Clinica(
-                id=id_value,
+                id=0,
                 name=name_value,
                 municipio=municipio_value,
                 provincia=provincia_value
             )
 
             # Guardar en la base de datos
-            result = self.clinicaRepository.createClinica(clinica)
+            result = self.clinicaRepository.postClinica(clinica)
 
             if result:
                 QMessageBox.information(self, "Éxito",

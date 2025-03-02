@@ -44,7 +44,9 @@ class ClinicaRepository:
             (clinica.municipio, clinica.provincia, clinica.name, id)
         )
         self.db.conn.commit()
+        return True
         
     def deleteClinica(self, id: int):
         self.db.cursor.execute("DELETE FROM Clinicas WHERE id = ?", (id,))
         self.db.conn.commit()
+        return True

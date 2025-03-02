@@ -66,7 +66,7 @@ class ClinicaEditWindow(QtWidgets.QMainWindow):
             )
 
             # Guardar cambios en la base de datos
-            result = self.clinicaRepository.updateClinica(updated_clinica)
+            result = self.clinicaRepository.putClinica(updated_clinica.id,updated_clinica)
 
             if result:
                 QMessageBox.information(self, "Éxito",

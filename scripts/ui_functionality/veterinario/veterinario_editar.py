@@ -42,9 +42,6 @@ class VeterinarioEditWindow(QtWidgets.QMainWindow):
     def load_clinicas(self):
         """Cargar las clínicas en el combo box"""
         try:
-            # Primero añadir opción "Sin asignar"
-            self.clinicaComboBox.addItem("Sin asignar", None)
-
             # Después añadir todas las clínicas de la base de datos
             clinicas = self.clinicaRepository.getClinicasNameAndId()
             for clinica in clinicas:

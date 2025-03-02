@@ -41,10 +41,7 @@ class VeterinarioCreateWindow(QtWidgets.QMainWindow):
         try:
             self.clinicaComboBox.clear()
 
-            # Primero añadir opción "Sin asignar"
-            self.clinicaComboBox.addItem("Sin asignar", None)
-
-            # Después añadir todas las clínicas de la base de datos
+           # Después añadir todas las clínicas de la base de datos
             clinicas = self.clinicaRepository.getClinicasNameAndId()
             for clinica in clinicas:
                 # clinica[0] es id, clinica[1] es nombre
