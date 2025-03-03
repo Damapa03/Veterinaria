@@ -7,7 +7,7 @@ class CreateForm(QWidget):
         self.parent = parent
         
         # Cargar el archivo UI directamente (ajuste la ruta según sea necesario)
-        uic.loadUi("scripts\crear_cliente.ui", self)
+        uic.loadUi("ui\pantalla_crearCliente.ui", self)
         self.setWindowTitle('Crear Cliente')
         
         # Conectar botones
@@ -45,7 +45,7 @@ class UpdateForm(QWidget):
         self.client_data = parent.clients[row]
         
         # Cargar el archivo UI directamente (ajuste la ruta según sea necesario)
-        uic.loadUi("scripts/actualizar_cliente.ui", self)
+        uic.loadUi("ui\pantalla_actualizarEliminarCliente.ui", self)
         self.setWindowTitle('Actualizar/Eliminar Cliente')
         
         # Llenar campos con la información del cliente

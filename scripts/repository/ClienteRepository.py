@@ -1,7 +1,7 @@
 from model.Cliente import Cliente
-from controller.SQLiteDatabase import SQLiteDatabase
+from database.SQLiteDatabase import SQLiteDatabase
 
-class ClienteController:
+class ClienteRepository:
     def __init__(self):
         self.sqlite_db = SQLiteDatabase()
         if not self.sqlite_db.is_connected():

@@ -8,10 +8,10 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
 
 # Importamos el controlador de SQLite y el modelo Cliente
-from controller.ClienteController import ClienteController
+from repository.ClienteRepository import ClienteRepository
 from model.Cliente import Cliente
-from forms import UpdateForm
-from forms import CreateForm
+from ui_functionality.Crear_Actualizar_EliminarClientes import UpdateForm
+from ui_functionality.Crear_Actualizar_EliminarClientes import CreateForm
 
 
 class MainWindow(QWidget):
@@ -23,7 +23,7 @@ class MainWindow(QWidget):
         
         # Inicializar el controlador de SQLite
         try:
-            self.controller = ClienteController()
+            self.controller = ClienteRepository()
         except ConnectionError as e:
             QMessageBox.critical(self, "Error de conexión", str(e))
             sys.exit(1)
