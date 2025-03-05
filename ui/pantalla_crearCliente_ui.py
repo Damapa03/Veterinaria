@@ -25,7 +25,7 @@ class Ui_Form(object):
         Form.resize(465, 417)
         self.gridLayoutWidget = QWidget(Form)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
-        self.gridLayoutWidget.setGeometry(QRect(10, 50, 411, 231))
+        self.gridLayoutWidget.setGeometry(QRect(30, 30, 411, 306))
         self.gridLayout = QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setObjectName(u"gridLayout")
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -81,7 +81,10 @@ class Ui_Form(object):
 
         self.pushButtonCrear = QPushButton(Form)
         self.pushButtonCrear.setObjectName(u"pushButtonCrear")
-        self.pushButtonCrear.setGeometry(QRect(140, 330, 131, 51))
+        self.pushButtonCrear.setGeometry(QRect(220, 360, 131, 51))
+        self.buttonRegresar = QPushButton(Form)
+        self.buttonRegresar.setObjectName(u"buttonRegresar")
+        self.buttonRegresar.setGeometry(QRect(30, 360, 111, 51))
 
         self.retranslateUi(Form)
 
@@ -96,5 +99,6 @@ class Ui_Form(object):
         self.label.setText(QCoreApplication.translate("Form", u"Dni", None))
         self.label_3.setText(QCoreApplication.translate("Form", u"Apellidos", None))
         self.pushButtonCrear.setText(QCoreApplication.translate("Form", u"Crear", None))
+        self.buttonRegresar.setText(QCoreApplication.translate("Form", u"Regresar", None))
     # retranslateUi
 

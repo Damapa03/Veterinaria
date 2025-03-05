@@ -25,7 +25,7 @@ class Ui_Form(object):
         Form.resize(456, 441)
         self.gridLayoutWidget_2 = QWidget(Form)
         self.gridLayoutWidget_2.setObjectName(u"gridLayoutWidget_2")
-        self.gridLayoutWidget_2.setGeometry(QRect(30, 50, 411, 251))
+        self.gridLayoutWidget_2.setGeometry(QRect(30, 50, 411, 306))
         self.gridLayout_2 = QGridLayout(self.gridLayoutWidget_2)
         self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
@@ -81,10 +81,13 @@ class Ui_Form(object):
 
         self.pushButtonActualizarCliente = QPushButton(Form)
         self.pushButtonActualizarCliente.setObjectName(u"pushButtonActualizarCliente")
-        self.pushButtonActualizarCliente.setGeometry(QRect(50, 360, 131, 51))
+        self.pushButtonActualizarCliente.setGeometry(QRect(170, 380, 131, 51))
         self.pushButtonEliminarCliente = QPushButton(Form)
         self.pushButtonEliminarCliente.setObjectName(u"pushButtonEliminarCliente")
-        self.pushButtonEliminarCliente.setGeometry(QRect(300, 360, 131, 51))
+        self.pushButtonEliminarCliente.setGeometry(QRect(320, 380, 131, 51))
+        self.buttonRegresar = QPushButton(Form)
+        self.buttonRegresar.setObjectName(u"buttonRegresar")
+        self.buttonRegresar.setGeometry(QRect(10, 380, 101, 51))
 
         self.retranslateUi(Form)
 
@@ -100,5 +103,6 @@ class Ui_Form(object):
         self.label_9.setText(QCoreApplication.translate("Form", u"Dni", None))
         self.pushButtonActualizarCliente.setText(QCoreApplication.translate("Form", u"Actualizar", None))
         self.pushButtonEliminarCliente.setText(QCoreApplication.translate("Form", u"Eliminar", None))
+        self.buttonRegresar.setText(QCoreApplication.translate("Form", u"Regresar", None))
     # retranslateUi
 

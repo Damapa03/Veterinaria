@@ -19,7 +19,7 @@
      <x>30</x>
      <y>50</y>
      <width>411</width>
-     <height>251</height>
+     <height>306</height>
     </rect>
    </property>
    <layout class="QGridLayout" name="gridLayout_2" rowstretch="0,0,0,0,0">
@@ -78,8 +78,8 @@
   <widget class="QPushButton" name="pushButtonActualizarCliente">
    <property name="geometry">
     <rect>
-     <x>50</x>
-     <y>360</y>
+     <x>170</x>
+     <y>380</y>
      <width>131</width>
      <height>51</height>
     </rect>
@@ -91,14 +91,27 @@
   <widget class="QPushButton" name="pushButtonEliminarCliente">
    <property name="geometry">
     <rect>
-     <x>300</x>
-     <y>360</y>
+     <x>320</x>
+     <y>380</y>
      <width>131</width>
      <height>51</height>
     </rect>
    </property>
    <property name="text">
     <string>Eliminar</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="buttonRegresar">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>380</y>
+     <width>101</width>
+     <height>51</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Regresar</string>
    </property>
   </widget>
  </widget>
