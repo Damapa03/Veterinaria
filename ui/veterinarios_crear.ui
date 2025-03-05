@@ -102,9 +102,9 @@
     <property name="geometry">
      <rect>
       <x>390</x>
-      <y>30</y>
+      <y>48</y>
       <width>331</width>
-      <height>139</height>
+      <height>121</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_2">
