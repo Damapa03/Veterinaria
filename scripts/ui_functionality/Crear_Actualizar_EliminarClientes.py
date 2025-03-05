@@ -6,23 +6,19 @@ class CreateForm(QWidget):
         super().__init__()
         self.parent = parent
         
-        # Load UI file
+        # Cargar acrhivo UI
         uic.loadUi("ui\pantalla_crearCliente.ui", self)
         self.setWindowTitle('Crear Cliente')
         
-        # Connect buttons
         self.pushButtonCrear.clicked.connect(self.createClient)
         
-        # Connect the return button to go back to the main screen
         self.buttonRegresar.clicked.connect(self.returnToMainScreen)
     
     def returnToMainScreen(self):
-        # Show the parent (main) window and close the current window
         self.parent.show()
         self.close()
     
     def createClient(self):
-        # Validate fields
         dni = self.textEditDni.toPlainText().strip()
         nombre = self.textEditNombre.toPlainText().strip()
         apellidos = self.textEditApellidos.toPlainText().strip()
@@ -33,12 +29,10 @@ class CreateForm(QWidget):
             QMessageBox.warning(self, "Campos requeridos", "Los campos DNI, Nombre y Apellidos son obligatorios")
             return
         
-        # Create client
         client_data = [dni, nombre, apellidos, email, telefono]
         
         if self.parent.addClient(client_data):
             QMessageBox.information(self, "Éxito", "Cliente creado correctamente")
-            # Return to main screen
             self.parent.show()
             self.close()
         else:
@@ -52,27 +46,22 @@ class UpdateForm(QWidget):
         self.row = row
         self.client_data = parent.clients[row]
         
-        # Load UI file
+        # Cargar acrhivo UI
         uic.loadUi("ui\pantalla_actualizarEliminarCliente.ui", self)
         self.setWindowTitle('Actualizar/Eliminar Cliente')
         
-        # Fill fields with client information
         self.fillClientData()
         
-        # Connect buttons
         self.pushButtonActualizarCliente.clicked.connect(self.updateClient)
         self.pushButtonEliminarCliente.clicked.connect(self.deleteClient)
         
-        # Connect the return button to go back to the main screen
         self.buttonRegresar.clicked.connect(self.returnToMainScreen)
     
     def returnToMainScreen(self):
-        # Show the parent (main) window and close the current window
         self.parent.show()
         self.close()
     
     def fillClientData(self):
-        # Fill the fields with the selected client's information
         self.textEditDniActualizar.setText(self.client_data[0])
         self.textEditNombreActualizar.setText(self.client_data[1])
         self.textEditApellidosActualizar.setText(self.client_data[2])
@@ -80,7 +69,6 @@ class UpdateForm(QWidget):
         self.textEditTelefonoActualizar.setText(self.client_data[4])
     
     def updateClient(self):
-        # Validate fields
         dni = self.textEditDniActualizar.toPlainText().strip()
         nombre = self.textEditNombreActualizar.toPlainText().strip()
         apellidos = self.textEditApellidosActualizar.toPlainText().strip()
@@ -96,14 +84,12 @@ class UpdateForm(QWidget):
         
         if self.parent.updateClient(self.row, client_data):
             QMessageBox.information(self, "Éxito", "Cliente actualizado correctamente")
-            # Return to main screen
             self.parent.show()
             self.close()
         else:
             QMessageBox.warning(self, "Error", "No se pudo actualizar el cliente")
     
     def deleteClient(self):
-        # Confirm deletion
         reply = QMessageBox.question(self, 'Confirmar eliminación', 
                                     '¿Está seguro que desea eliminar este cliente?',
                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No, 
@@ -112,7 +98,6 @@ class UpdateForm(QWidget):
         if reply == QMessageBox.StandardButton.Yes:
             if self.parent.deleteClient(self.row):
                 QMessageBox.information(self, "Éxito", "Cliente eliminado correctamente")
-                # Return to main screen
                 self.parent.show()
                 self.close()
             else:
