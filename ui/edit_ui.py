@@ -15,9 +15,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QDateTimeEdit, QDoubleSpinBox, QFormLayout,
-    QHBoxLayout, QLabel, QLineEdit, QPushButton,
-    QSizePolicy, QSpacerItem, QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QApplication, QComboBox, QDateTimeEdit, QDoubleSpinBox,
+    QFormLayout, QHBoxLayout, QLabel, QLineEdit,
+    QPushButton, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -32,7 +33,7 @@ class Ui_Form(object):
         font.setPointSize(14)
         font.setBold(True)
         self.labelTitulo.setFont(font)
-        self.labelTitulo.setAlignment(Qt.AlignCenter)
+        self.labelTitulo.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.verticalLayout.addWidget(self.labelTitulo)
 
@@ -53,20 +54,10 @@ class Ui_Form(object):
 
         self.formLayout.setWidget(1, QFormLayout.LabelRole, self.label_2)
 
-        self.editAnimal = QLineEdit(Form)
-        self.editAnimal.setObjectName(u"editAnimal")
-
-        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.editAnimal)
-
         self.label_3 = QLabel(Form)
         self.label_3.setObjectName(u"label_3")
 
         self.formLayout.setWidget(2, QFormLayout.LabelRole, self.label_3)
-
-        self.editProfesional = QLineEdit(Form)
-        self.editProfesional.setObjectName(u"editProfesional")
-
-        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.editProfesional)
 
         self.label_4 = QLabel(Form)
         self.label_4.setObjectName(u"label_4")
@@ -88,6 +79,16 @@ class Ui_Form(object):
         self.editPrecio.setMaximum(9999.989999999999782)
 
         self.formLayout.setWidget(4, QFormLayout.FieldRole, self.editPrecio)
+
+        self.editProfesional = QComboBox(Form)
+        self.editProfesional.setObjectName(u"editProfesional")
+
+        self.formLayout.setWidget(2, QFormLayout.FieldRole, self.editProfesional)
+
+        self.editAnimal = QComboBox(Form)
+        self.editAnimal.setObjectName(u"editAnimal")
+
+        self.formLayout.setWidget(1, QFormLayout.FieldRole, self.editAnimal)
 
 
         self.verticalLayout.addLayout(self.formLayout)

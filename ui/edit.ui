@@ -19,7 +19,6 @@
      <property name="font">
       <font>
        <pointsize>14</pointsize>
-       <weight>75</weight>
        <bold>true</bold>
       </font>
      </property>
@@ -27,7 +26,7 @@
       <string>Editar Cita</string>
      </property>
      <property name="alignment">
-      <set>Qt::AlignCenter</set>
+      <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
     </widget>
    </item>
@@ -50,18 +49,12 @@
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="editAnimal"/>
-     </item>
      <item row="2" column="0">
       <widget class="QLabel" name="label_3">
        <property name="text">
         <string>Profesional:</string>
        </property>
       </widget>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="editProfesional"/>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="label_4">
@@ -86,9 +79,15 @@
         <string> €</string>
        </property>
        <property name="maximum">
-        <double>9999.990000000000236</double>
+        <double>9999.989999999999782</double>
        </property>
       </widget>
+     </item>
+     <item row="2" column="1">
+      <widget class="QComboBox" name="editProfesional"/>
+     </item>
+     <item row="1" column="1">
+      <widget class="QComboBox" name="editAnimal"/>
      </item>
     </layout>
    </item>
@@ -97,7 +96,7 @@
      <item>
       <spacer name="horizontalSpacer">
        <property name="orientation">
-        <enum>Qt::Horizontal</enum>
+        <enum>Qt::Orientation::Horizontal</enum>
        </property>
        <property name="sizeHint" stdset="0">
         <size>

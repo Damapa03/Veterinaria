@@ -63,8 +63,17 @@ class EditarCitaWindow(QWidget):
     def cargarDatos(self):
         if self.cita:
             self.ui.editMotivo.setText(self.cita["motivo"])
-            self.ui.editAnimal.setText(str(self.cita["animal"]))
-            self.ui.editProfesional.setText(self.cita["profesional"])
+            
+            self.ui.editAnimal.clear()
+            animales = repository().getAnimal()
+            for animal in animales:
+                self.ui.editAnimal.addItem(animal[1], animal[0])
+
+            self.ui.editProfesional.clear()
+            profesionales = repository().getVetarinarioNombreDNI()
+            for profesional in profesionales:
+                self.ui.editProfesional.addItem(profesional[1], profesional[0])
+                
             self.ui.editFecha.setDateTime(QDateTime.fromString(self.cita["fecha"], "yyyy-MM-dd hh:mm"))
             self.ui.editPrecio.setValue(self.cita["precio"])
     
@@ -76,8 +85,8 @@ class EditarCitaWindow(QWidget):
         cita_actualizada = {
             "id": self.cita["id"],
             "motivo": self.ui.editMotivo.text(),
-            "animal": self.ui.editAnimal.text(),
-            "profesional": self.ui.editProfesional.text(),
+            "animal": self.ui.editAnimal.currentData(),
+            "profesional": self.ui.editProfesional.currentData(),
             "fecha": self.ui.editFecha.dateTime().toString("yyyy-MM-dd hh:mm"),
             "precio": self.ui.editPrecio.value()
         }
@@ -108,7 +117,7 @@ class MainWindow(QMainWindow):
         citaRepository = repository().getCitas()
         for cita in citaRepository:
             d = {
-                "id":cita[0],
+                "id": cita[0],
                 "fecha" : cita[1],
                 "precio": cita[2],
                 "motivo": cita[3],

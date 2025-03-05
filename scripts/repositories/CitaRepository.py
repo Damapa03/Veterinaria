@@ -7,7 +7,7 @@ class CitaRepository:
         self.db = Database()
 
     def getCitas(self):
-        self.db.cursor.execute("SELECT * FROM Cita")
+        self.db.cursor.execute("SELECT c.id, c.date, c.price, c.reason, a.name, v.name  FROM Cita c, Animales a, Veterinario v WHERE v.DNI = c.professional AND a.id = c.animal")
         return self.db.cursor.fetchall()
 
     def getCita(self,id: str):
@@ -36,4 +36,12 @@ class CitaRepository:
             self.db.cursor.execute("DELETE FROM Cita WHERE id = ?", (id,))  # Nota la coma aquí
             self.db.conn.commit()  # Nota: faltaba los paréntesis ()
         except sqlite3.IntegrityError as e:
-            print(f"Error {e}")
+            print(f"Error {e}") 
+
+    def getVetarinarioNombreDNI(self): 
+       self.db.cursor.execute("SELECT DNI, name FROM Veterinario")
+       return self.db.cursor.fetchall()        
+    
+    def getAnimal(self):
+        self.db.cursor.execute("SELECT id, name FROM Animales")
+        return self.db.cursor.fetchall()
