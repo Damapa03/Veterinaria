@@ -1,1 +1,1 @@
-# Esta carpeta contiene las imagenes e iconos que vayan a ser usadas
+# Carpeta para guardar el script sql y el el script temporal para crear la base de datos
