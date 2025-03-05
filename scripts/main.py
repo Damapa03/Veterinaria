@@ -187,18 +187,8 @@ class MainWindow(QWidget):
             QMessageBox.warning(self, "Error", "No se pudo eliminar el cliente de la base de datos")
             return False
 
-# Las clases CreateForm y UpdateForm permanecen igual que en tu código original
-# ya que solo interactúan con la clase MainWindow
-
 if __name__ == "__main__":
-    # Create the Qt Application
     app = QApplication(sys.argv)
-    
-    # Create the main window
     window = MainWindow()
-    
-    # Show the window
     window.show()
-    
-    # Start the event loop
     sys.exit(app.exec())
