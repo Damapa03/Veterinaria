@@ -17,7 +17,7 @@ class AnimalsMainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/animals_main.ui')
+        ui_path = os.path.join(current_dir, '../../../ui/animal_main.ui')
         uic.loadUi(ui_path, self)
 
         # Inicializar repositorio
