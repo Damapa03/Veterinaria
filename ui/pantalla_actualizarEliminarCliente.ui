@@ -84,6 +84,24 @@
      <height>51</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: lightgreen;
+    color: Black;
+    border: 2px solid #006400;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: #00b300;
+}
+
+QPushButton:pressed {
+    background-color: #004d00;
+}
+</string>
+   </property>
    <property name="text">
     <string>Actualizar</string>
    </property>
@@ -97,6 +115,24 @@
      <height>51</height>
     </rect>
    </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: #ff5e5e;
+    color: black;
+    border: 2px solid #8B0000;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: #df5252;
+}
+
+QPushButton:pressed {
+    background-color: #cc0000;
+}
+</string>
+   </property>
    <property name="text">
     <string>Eliminar</string>
    </property>
@@ -109,6 +145,24 @@
      <width>101</width>
      <height>51</height>
     </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+    background-color: lightgray;
+    color: black;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: silver;
+}
+
+QPushButton:pressed {
+    background-color: darkgray;
+}
+</string>
    </property>
    <property name="text">
     <string>Regresar</string>

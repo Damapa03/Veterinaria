@@ -82,12 +82,60 @@ class Ui_Form(object):
         self.pushButtonActualizarCliente = QPushButton(Form)
         self.pushButtonActualizarCliente.setObjectName(u"pushButtonActualizarCliente")
         self.pushButtonActualizarCliente.setGeometry(QRect(170, 380, 131, 51))
+        self.pushButtonActualizarCliente.setStyleSheet(u"QPushButton {\n"
+"    background-color: lightgreen;\n"
+"    color: Black;\n"
+"    border: 2px solid #006400;\n"
+"    border-radius: 10px;\n"
+"    padding: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #00b300;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #004d00;\n"
+"}\n"
+"")
         self.pushButtonEliminarCliente = QPushButton(Form)
         self.pushButtonEliminarCliente.setObjectName(u"pushButtonEliminarCliente")
         self.pushButtonEliminarCliente.setGeometry(QRect(320, 380, 131, 51))
+        self.pushButtonEliminarCliente.setStyleSheet(u"QPushButton {\n"
+"    background-color: #ff5e5e;\n"
+"    color: black;\n"
+"    border: 2px solid #8B0000;\n"
+"    border-radius: 10px;\n"
+"    padding: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #df5252;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #cc0000;\n"
+"}\n"
+"")
         self.buttonRegresar = QPushButton(Form)
         self.buttonRegresar.setObjectName(u"buttonRegresar")
         self.buttonRegresar.setGeometry(QRect(10, 380, 101, 51))
+        self.buttonRegresar.setStyleSheet(u"QPushButton {\n"
+"    background-color: lightgray;\n"
+"    color: black;\n"
+"    border: 2px solid gray;\n"
+"    border-radius: 10px;\n"
+"    padding: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: silver;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: darkgray;\n"
+"}\n"
+"")
 
         self.retranslateUi(Form)
 

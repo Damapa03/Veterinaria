@@ -1,124 +1,146 @@
 import sys
-from PyQt6 import QtCore, QtWidgets
-from PyQt6.QtCore import Qt
+import sqlite3
+import os
+from PyQt6 import QtCore, QtWidgets, uic
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QPushButton, QTableView, QLabel, 
-    QTextEdit, QGridLayout, QHBoxLayout, QVBoxLayout, QMessageBox
+    QApplication, QWidget, QMessageBox, QDialog, QVBoxLayout, QTableWidget, 
+    QTableWidgetItem, QLabel, QPushButton, QHBoxLayout
 )
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
-
-# Importamos el controlador de SQLite y el modelo Cliente
 from repository.ClienteRepository import ClienteRepository
 from model.Cliente import Cliente
 from ui_functionality.Crear_Actualizar_EliminarClientes import UpdateForm
 from ui_functionality.Crear_Actualizar_EliminarClientes import CreateForm
 
+class AnimalSearchDialog(QDialog):
+    def __init__(self, parent, animals):
+        super().__init__(parent)
+        self.setWindowTitle('Animales del Cliente')
+        layout = QVBoxLayout()
+        
+        if not animals:
+            no_animals_label = QLabel('No se encontraron animales para este cliente.')
+            layout.addWidget(no_animals_label)
+        else:
+            table = QTableWidget()
+            table.setColumnCount(5)
+            table.setHorizontalHeaderLabels(['Nombre', 'Especie', 'Raza', 'Edad', 'Sexo'])
+            table.setRowCount(len(animals))
+            
+            for row, animal in enumerate(animals):
+                for col, value in enumerate(animal):
+                    table.setItem(row, col, QTableWidgetItem(str(value)))
+            
+            layout.addWidget(table)
+            
+        self.setLayout(layout)
 
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        
-        # Inicializar la lista de clientes
+        uic.loadUi('ui/pantalla_principal.ui', self)
         self.clients = []
         
-        # Inicializar el controlador de SQLite
         try:
             self.controller = ClienteRepository()
         except ConnectionError as e:
             QMessageBox.critical(self, "Error de conexión", str(e))
             sys.exit(1)
-        
-        self.setupUi()
-        self.setWindowTitle('Gestión de Clientes')
-        
-        # Configurar la tabla con las columnas
+            
         self.setupTableView()
-        
-        # Cargar todos los clientes desde SQLite
         self.loadAllClients()
         
-        # Conectar botones
+        # Conectar señales a slots
         self.botonCliente.clicked.connect(self.openCreateForm)
         self.tableViewClientes.doubleClicked.connect(self.openUpdateForm)
         self.botonRegresar.clicked.connect(self.close)
+        
+        # Conectar el botón filtra_animales ya existente en el UI
+        self.filtra_animales.clicked.connect(self.searchAnimals)
     
-    def setupUi(self):
-        # Crear los widgets de la pantalla principal
-        self.botonCliente = QPushButton("Crear Cliente")
-        self.botonRegresar = QPushButton("Regresar")
-        self.tableViewClientes = QTableView()
-        
-        # Configurar el layout
-        main_layout = QHBoxLayout()
-        
-        # Panel izquierdo con botones
-        left_panel = QVBoxLayout()
-        left_panel.addWidget(self.botonCliente)
-        left_panel.addStretch()
-        left_panel.addWidget(self.botonRegresar)
-        
-        # Añadir widgets al layout principal
-        main_layout.addLayout(left_panel)
-        main_layout.addWidget(self.tableViewClientes, 1)  # El 1 da más espacio a la tabla
-        
-        # Establecer el layout
-        self.setLayout(main_layout)
-        self.resize(730, 476)
-        
     def setupTableView(self):
-        # Crear modelo para la tabla
         self.model = QStandardItemModel()
-        
-        # Definir las columnas
         self.model.setHorizontalHeaderLabels(['DNI', 'Nombre', 'Apellido', 'Email', 'Teléfono'])
-        
-        # Asignar el modelo a la tabla
         self.tableViewClientes.setModel(self.model)
         
-        # Ajustar el ancho de las columnas
         for column in range(5):
             self.tableViewClientes.setColumnWidth(column, 90)
     
     def loadAllClients(self):
-        # Limpiar la tabla
         self.model.removeRows(0, self.model.rowCount())
         self.clients.clear()
         
-        # Obtener todos los clientes desde SQLite
         sqlite_clients = self.controller.getClientes()
-        
-        # Añadir cada cliente a la tabla
         for client_data in sqlite_clients:
             self.clients.append([
-                client_data['dni'],
+                client_data['DNI'],  # Usando 'DNI' en mayúsculas
                 client_data['name'],
                 client_data['surname'],
                 client_data['email'],
                 client_data['telephone']
             ])
+            
             row = []
             for data in self.clients[-1]:
-                item = QStandardItem(data)
+                # Convertir datos a cadena (en caso de que no lo sean)
+                item = QStandardItem(str(data))
                 row.append(item)
+            
             self.model.appendRow(row)
     
+    def searchAnimals(self):
+        dni, ok = QtWidgets.QInputDialog.getText(self, 'Buscar Animales', 'Ingrese DNI del cliente:')
+        if ok and dni.strip():
+            animals = self.findAnimalsByDNI(dni.strip())
+            dialog = AnimalSearchDialog(self, animals)
+            dialog.exec()
+    
+    def findAnimalsByDNI(self, dni):
+        try:
+            # Usar la misma conexión a la base de datos que el resto de la aplicación
+            # a través del controlador existente
+            query = """
+            SELECT a.name as nombre, a.species as especie, a.description as raza, 
+                   a.id as edad, 'No disponible' as sexo
+            FROM Animales a
+            WHERE a.owner = ?
+            """
+            
+            # Acceder al cursor y conexión a través del controlador
+            self.controller.db.cursor.execute(query, (dni,))
+            animals = self.controller.db.cursor.fetchall()
+            
+            # Convertir los resultados en una lista de tuplas
+            result = []
+            for animal in animals:
+                result.append((
+                    animal['nombre'],
+                    animal['especie'],
+                    animal['raza'],
+                    animal['edad'],
+                    animal['sexo']
+                ))
+            
+            return result
+        except sqlite3.Error as e:
+            QMessageBox.warning(self, "Error", f"No se pudo acceder a la base de datos de animales: {e}")
+            return []
+        except Exception as e:
+            QMessageBox.warning(self, "Error", f"Ocurrió un error inesperado: {e}")
+            return []
+    
     def openCreateForm(self):
-        # Abrir formulario de creación
         self.create_form = CreateForm(self)
         self.create_form.show()
         self.hide()
     
     def openUpdateForm(self, index):
-        # Obtener la fila seleccionada
         row = index.row()
-        
-        # Abrir formulario de actualización con los datos seleccionados
         self.update_form = UpdateForm(self, row)
         self.update_form.show()
         self.hide()
     
     def addClient(self, client_data):
-        # Crear un objeto Cliente
         cliente = Cliente(
             dni=client_data[0],
             name=client_data[1],
@@ -127,14 +149,11 @@ class MainWindow(QWidget):
             tlfn=client_data[4]
         )
         
-        # Añadir a SQLite
         success = self.controller.postCliente(cliente)
-        
         if success:
-            # Añadir a la tabla si se añadió correctamente a SQLite
             row = []
             for data in client_data:
-                item = QStandardItem(data)
+                item = QStandardItem(str(data))
                 row.append(item)
             
             self.model.appendRow(row)
@@ -145,10 +164,7 @@ class MainWindow(QWidget):
             return False
     
     def updateClient(self, row, client_data):
-        # Obtener el DNI original
         original_dni = self.clients[row][0]
-        
-        # Crear un objeto Cliente con los nuevos datos
         cliente = Cliente(
             dni=client_data[0],
             name=client_data[1],
@@ -157,13 +173,10 @@ class MainWindow(QWidget):
             tlfn=client_data[4]
         )
         
-        # Actualizar en SQLite
         success = self.controller.putCliente(original_dni, cliente)
-        
-        if success:
-            # Actualizar en la tabla si se actualizó correctamente en SQLite
+        if success is None:
             for col, data in enumerate(client_data):
-                self.model.setItem(row, col, QStandardItem(data))
+                self.model.setItem(row, col, QStandardItem(str(data)))
             
             self.clients[row] = client_data
             return True
@@ -172,20 +185,17 @@ class MainWindow(QWidget):
             return False
     
     def deleteClient(self, row):
-        # Obtener el DNI del cliente
         dni = self.clients[row][0]
-        
-        # Eliminar de SQLite
         success = self.controller.deleteCliente(dni)
         
-        if success:
-            # Eliminar de la tabla si se eliminó correctamente de SQLite
+        if success is None:
             self.model.removeRow(row)
             del self.clients[row]
             return True
         else:
             QMessageBox.warning(self, "Error", "No se pudo eliminar el cliente de la base de datos")
             return False
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

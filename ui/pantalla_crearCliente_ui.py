@@ -22,7 +22,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(465, 417)
+        Form.resize(465, 415)
         self.gridLayoutWidget = QWidget(Form)
         self.gridLayoutWidget.setObjectName(u"gridLayoutWidget")
         self.gridLayoutWidget.setGeometry(QRect(30, 30, 411, 306))
@@ -82,9 +82,41 @@ class Ui_Form(object):
         self.pushButtonCrear = QPushButton(Form)
         self.pushButtonCrear.setObjectName(u"pushButtonCrear")
         self.pushButtonCrear.setGeometry(QRect(220, 360, 131, 51))
+        self.pushButtonCrear.setStyleSheet(u"QPushButton {\n"
+"    background-color: lightgreen;\n"
+"    color: Black;\n"
+"    border: 2px solid #006400;\n"
+"    border-radius: 10px;\n"
+"    padding: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: #00b300;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: #004d00;\n"
+"}\n"
+"")
         self.buttonRegresar = QPushButton(Form)
         self.buttonRegresar.setObjectName(u"buttonRegresar")
         self.buttonRegresar.setGeometry(QRect(30, 360, 111, 51))
+        self.buttonRegresar.setStyleSheet(u"QPushButton {\n"
+"    background-color: lightgray;\n"
+"    color: black;\n"
+"    border: 2px solid gray;\n"
+"    border-radius: 10px;\n"
+"    padding: 5px;\n"
+"}\n"
+"\n"
+"QPushButton:hover {\n"
+"    background-color: silver;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {\n"
+"    background-color: darkgray;\n"
+"}\n"
+"")
 
         self.retranslateUi(Form)
 
