@@ -1,10 +1,12 @@
-from DAO import Database
+import sqlite3
+
+from scripts.DAO import Database
 import sqlite3
 from scripts.model.Clinica import Clinica
 
-class ClinicaController:
+class ClinicaRepository:
     def __init__(self):
-        self.db = Database("veterinaria_clinic.db")
+        self.db = Database()
         
     def getClinicas(self):
         self.db.cursor.execute("SELECT * FROM Clinicas")
@@ -13,7 +15,17 @@ class ClinicaController:
     def getClinica(self, id: int):
         self.db.cursor.execute("SELECT * FROM Clinicas WHERE id = ?", (id,))
         return self.db.cursor.fetchone()
-    
+
+    def getClinicaName(self, id: int):
+        self.db.cursor.execute("SELECT name FROM Clinicas WHERE id = ?", (id,))
+        return self.db.cursor.fetchone()
+
+    def getClinicasNameAndId(self):
+        self.db.cursor.execute("SELECT id, name FROM Clinicas")
+        result = self.db.cursor.fetchall()
+        print(f"Clinics fetched: {result}")  # Debugging output
+        return result
+
     def postClinica(self, clinica: Clinica):
         try:
             self.db.cursor.execute(
@@ -32,7 +44,9 @@ class ClinicaController:
             (clinica.municipio, clinica.provincia, clinica.name, id)
         )
         self.db.conn.commit()
+        return True
         
     def deleteClinica(self, id: int):
         self.db.cursor.execute("DELETE FROM Clinicas WHERE id = ?", (id,))
         self.db.conn.commit()
+        return True
