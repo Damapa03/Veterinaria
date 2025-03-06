@@ -16,8 +16,15 @@ class RecetaDetailWindow(QtWidgets.QMainWindow):
         self.parent = parent
         self.receta = receta
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/receta_information.ui')
-        uic.loadUi(ui_path, self)
+
+        # Cargar archivo UI
+        ui_path = os.path.join(current_dir, '../../../ui/recetas_information.ui')
+
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
 
         # Inicializar repositorio
         self.recetaRepository = RecetaRepository()
@@ -35,15 +42,18 @@ class RecetaDetailWindow(QtWidgets.QMainWindow):
 
     def display_receta_info(self):
         """Mostrar la información de la receta en la interfaz"""
-        self.id.setText(f"ID: {self.receta.id}")
-        self.treatment.setText(f"Tratamiento: {self.receta.treatment}")
-        self.start_date.setText(f"Fecha de inicio: {self.receta.start_date}")
-        
-        # Mostrar estado de finalización
-        estado = "Finalizada" if self.receta.finalized else "En curso"
-        self.finalized.setText(f"Estado: {estado}")
-        
-        self.pacient.setText(f"Paciente: {self.receta.pacient}")
+        try:
+            self.id.setText(f"ID: {self.receta.id}")
+            self.treatment.setText(f"Tratamiento: {self.receta.treatment}")
+            self.start_date.setText(f"Fecha de inicio: {self.receta.start_date}")
+
+            # Mostrar estado de finalización
+            estado = "Finalizada" if self.receta.finalized else "En curso"
+            self.finalized.setText(f"Estado: {estado}")
+
+            self.pacient.setText(f"Paciente: {self.receta.pacient}")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Error al mostrar información: {str(e)}")
 
     def on_volver_clicked(self):
         """Volver a la pantalla principal"""
@@ -59,9 +69,9 @@ class RecetaDetailWindow(QtWidgets.QMainWindow):
     def on_borrar_clicked(self):
         """Eliminar la receta actual previa confirmación"""
         reply = QMessageBox.question(self, 'Confirmar eliminación',
-                                    f'¿Está seguro de que desea eliminar la receta #{self.receta.id}?',
-                                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-                                    QMessageBox.StandardButton.No)
+                                     f'¿Está seguro de que desea eliminar la receta #{self.receta.id}?',
+                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                                     QMessageBox.StandardButton.No)
 
         if reply == QMessageBox.StandardButton.Yes:
             try:
@@ -70,12 +80,12 @@ class RecetaDetailWindow(QtWidgets.QMainWindow):
 
                 if result:
                     QMessageBox.information(self, "Éxito",
-                                          "Receta eliminada correctamente")
+                                            "Receta eliminada correctamente")
                     self.parent.load_recetas()  # Recargar lista en ventana principal
                     self.parent.show()
                     self.close()
                 else:
                     QMessageBox.critical(self, "Error",
-                                       "No se pudo eliminar la receta. Ha ocurrido un error en la base de datos.")
+                                         "No se pudo eliminar la receta. Ha ocurrido un error en la base de datos.")
             except Exception as e:
                 QMessageBox.critical(self, "Error", f"Error al eliminar receta: {str(e)}")

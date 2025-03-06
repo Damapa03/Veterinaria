@@ -16,7 +16,7 @@ class RecetaEditWindow(QtWidgets.QMainWindow):
         self.parent = parent
         self.receta_id = receta_id
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/receta_editar.ui')
+        ui_path = os.path.join(current_dir, '../../../ui/recetas_editar.ui')
         uic.loadUi(ui_path, self)
 
         # Inicializar repositorio

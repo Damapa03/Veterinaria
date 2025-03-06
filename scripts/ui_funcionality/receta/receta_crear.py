@@ -14,7 +14,7 @@ class RecetaCreateWindow(QtWidgets.QMainWindow):
         super().__init__()
         self.parent = parent
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/receta_crear.ui')
+        ui_path = os.path.join(current_dir, '../../../ui/recetas_crear.ui')
         uic.loadUi(ui_path, self)
 
         # Inicializar repositorio
