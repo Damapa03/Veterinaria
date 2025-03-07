@@ -1,3 +1,4 @@
+@ -1,195 +1,199 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>MainWindow</class>
@@ -129,6 +130,11 @@ QPushButton:pressed {
      </item>
      <item>
       <widget class="QComboBox" name="speciesComboBox"/>
+      <widget class="QLineEdit" name="speciesFilterInput">
+       <property name="placeholderText">
+        <string>Buscar por dueño</string>
+       </property>
+      </widget>
      </item>
      <item>
       <widget class="QLabel" name="ownerLabel">
