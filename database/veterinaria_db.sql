@@ -70,7 +70,7 @@ INSERT INTO Clinicas (Municipio, Provincia, name) VALUES
 ('Barcelona', 'Barcelona', 'PetHealth Barcelona');
 
 -- Ejemplo Veterinarios
-INSERT OR IGNORE INTO Veterinario (DNI, name, surname, email, telephone, password, location) VALUES
+INSERT INTO Veterinario (DNI, name, surname, email, telephone, password, location) VALUES
 ('12345678A', 'Ana', 'Garcia', 'ana.garcia@vetclinic.com', '612345678', 'securepass123', 1),
 ('87654321B', 'Carlos', 'Lopez', 'carlos.lopez@vetclinic.com', '687654321', 'mypassword456', 2);
 
@@ -92,7 +92,7 @@ INSERT INTO Recetas (treatment, start_date, finalized, pacient) VALUES
 ('Antiinflamatorio', '2025-02-05', '2025-02-15', 3);
 
 -- Ejemplo Citas
-INSERT OR IGNORE INTO Cita (id,date, price, reason, animal, professional) VALUES 
-(1,'2025-01-15', 50.00, 'Consulta por infección cutánea', 1, '12345678A'),
-(2,'2025-02-10', 35.00, 'Revisión y vacunación anual', 2, '87654321B'),
-(3,'2025-02-05', 65.00, 'Tratamiento dental y limpieza', 3, '12345678A');
+INSERT INTO Cita (date, price, reason, animal, professional) VALUES
+('2025-01-15', 50.00, 'Consulta por infeccion cutánea', 1, '12345678A'),
+('2025-02-10', 35.00, 'Revision y vacunación anual', 2, '87654321B'),
+('2025-02-05', 65.00, 'Tratamiento dental y limpieza', 3, '12345678A');
