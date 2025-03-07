@@ -36,8 +36,11 @@
       <height>21</height>
      </rect>
     </property>
+    <property name="text">
+     <string/>
+    </property>
     <property name="echoMode">
-     <enum>QLineEdit::EchoMode::Password</enum>
+     <enum>QLineEdit::EchoMode::Normal</enum>
     </property>
    </widget>
    <widget class="QPushButton" name="aceptatButton">
@@ -101,12 +104,20 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">color: blue;</string>
+    </property>
     <property name="text">
      <string>¿No tienes cuenta? Registrate</string>
     </property>
    </widget>
   </widget>
  </widget>
+ <tabstops>
+  <tabstop>emailInput</tabstop>
+  <tabstop>passwordInput</tabstop>
+  <tabstop>aceptatButton</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

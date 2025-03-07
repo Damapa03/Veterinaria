@@ -70,7 +70,7 @@ INSERT INTO Clinicas (Municipio, Provincia, name) VALUES
 ('Barcelona', 'Barcelona', 'PetHealth Barcelona');
 
 -- Ejemplo Veterinarios
-INSERT INTO Veterinario (DNI, name, surname, email, telephone, password, location) VALUES
+INSERT OR IGNORE INTO Veterinario (DNI, name, surname, email, telephone, password, location) VALUES
 ('12345678A', 'Ana', 'Garcia', 'ana.garcia@vetclinic.com', '612345678', 'securepass123', 1),
 ('87654321B', 'Carlos', 'Lopez', 'carlos.lopez@vetclinic.com', '687654321', 'mypassword456', 2);
 

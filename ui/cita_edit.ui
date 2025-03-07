@@ -108,6 +108,23 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnGuardar">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: lightgreen;
+    color: Black;
+    border: 2px solid #006400;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: #00b300;
+}
+
+QPushButton:pressed {
+    background-color: #004d00;
+}</string>
+       </property>
        <property name="text">
         <string>Guardar</string>
        </property>
@@ -115,6 +132,23 @@
      </item>
      <item>
       <widget class="QPushButton" name="btnCancelar">
+       <property name="styleSheet">
+        <string notr="true">QPushButton {
+    background-color: #ff5e5e;
+    color: black;
+    border: 2px solid #8B0000;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: #df5252;
+}
+
+QPushButton:pressed {
+    background-color: #cc0000;
+}</string>
+       </property>
        <property name="text">
         <string>Cancelar</string>
        </property>

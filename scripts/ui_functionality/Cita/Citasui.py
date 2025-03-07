@@ -41,9 +41,44 @@ class TarjetaCita(QFrame):
         btn_layout = QHBoxLayout()
         
         btn_eliminar = QPushButton("Eliminar")
+        btn_eliminar.setStyleSheet("""
+        QPushButton {
+            background-color: #ff5e5e;
+            color: black;
+            border: 2px solid #8B0000;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        QPushButton:hover {
+            background-color: #df5252;
+        }
+
+        QPushButton:pressed {
+            background-color: #cc0000;
+        }
+        """)
         btn_eliminar.clicked.connect(lambda: self.on_eliminar(self.cita["id"]))
         
         btn_editar = QPushButton("Editar")
+        btn_editar.setStyleSheet("""
+        QPushButton {
+            background-color: lightgray;
+            color: black;
+            border: 2px solid gray;
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        QPushButton:hover {
+            background-color: silver;
+        }
+
+        QPushButton:pressed {
+            background-color: darkgray;
+        }
+
+        """)
         btn_editar.clicked.connect(lambda: self.on_editar(self.cita))
         
         btn_layout.addWidget(btn_eliminar)
@@ -56,7 +91,7 @@ class EditarCitaWindow(QWidget):
         self.cita = cita
         self.is_new = is_new
         self.on_guardar = on_guardar
-        self.ui = uic.loadUi("ui/edit.ui", self)
+        self.ui = uic.loadUi("ui/cita_edit.ui", self)
         self.cargarDatos()
         self.conectarBotones()
         
