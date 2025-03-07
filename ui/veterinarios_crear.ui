@@ -44,9 +44,9 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>30</y>
+      <y>40</y>
       <width>352</width>
-      <height>139</height>
+      <height>91</height>
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout">
@@ -57,6 +57,7 @@
       <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
      <item row="0" column="0">
+<<<<<<< Updated upstream:ui/veterinarios_crear.ui
       <widget class="QLabel" name="dniLabel">
        <property name="text">
         <string>DNI:</string>
@@ -68,21 +69,33 @@
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="nameLabel">
+=======
+      <widget class="QLabel" name="treatmentLabel">
+>>>>>>> Stashed changes:ui/recetas_crear.ui
        <property name="text">
         <string>Nombre:</string>
        </property>
       </widget>
      </item>
+<<<<<<< Updated upstream:ui/veterinarios_crear.ui
      <item row="1" column="1">
       <widget class="QLineEdit" name="nameInput"/>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="surnameLabel">
+=======
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="treatmentInput"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="startDateLabel">
+>>>>>>> Stashed changes:ui/recetas_crear.ui
        <property name="text">
         <string>Apellidos:</string>
        </property>
       </widget>
      </item>
+<<<<<<< Updated upstream:ui/veterinarios_crear.ui
      <item row="2" column="1">
       <widget class="QLineEdit" name="surnameInput"/>
      </item>
@@ -95,16 +108,27 @@
      </item>
      <item row="3" column="1">
       <widget class="QLineEdit" name="emailInput"/>
+=======
+     <item row="1" column="1">
+      <widget class="QDateEdit" name="startDateInput"/>
+>>>>>>> Stashed changes:ui/recetas_crear.ui
      </item>
     </layout>
    </widget>
    <widget class="QWidget" name="formLayoutWidget_2">
     <property name="geometry">
      <rect>
+<<<<<<< Updated upstream:ui/veterinarios_crear.ui
       <x>390</x>
       <y>48</y>
       <width>331</width>
       <height>121</height>
+=======
+      <x>400</x>
+      <y>60</y>
+      <width>331</width>
+      <height>81</height>
+>>>>>>> Stashed changes:ui/recetas_crear.ui
      </rect>
     </property>
     <layout class="QFormLayout" name="formLayout_2">
@@ -126,7 +150,11 @@
       </widget>
      </item>
      <item row="1" column="1">
+<<<<<<< Updated upstream:ui/veterinarios_crear.ui
       <widget class="QLineEdit" name="telephoneInput"/>
+=======
+      <widget class="QComboBox" name="pacientInput"/>
+>>>>>>> Stashed changes:ui/recetas_crear.ui
      </item>
      <item row="0" column="0">
       <widget class="QLabel" name="passwordLabel">
