@@ -2,14 +2,13 @@ import os
 import sys
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QWidget, QHBoxLayout, QLabel, QPushButton, QFrame, QVBoxLayout, QMessageBox
-from typing import List, Optional
+from PyQt6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QFrame
 
 from scripts.DAO import Database
 from scripts.model.Receta import Receta
-from scripts.repository.AnimalRepository import AnimalRepository
-from scripts.repository.RecetaRepository import RecetaRepository
-from scripts.ui_funcionality.receta.receta_informacion import RecetaDetailWindow
+from scripts.repositories.AnimalRepository import AnimalRepository
+from scripts.repositories.RecetaRepository import RecetaRepository
+from scripts.ui_functionality.receta.receta_informacion import RecetaDetailWindow
 
 
 class RecetasMainWindow(QtWidgets.QMainWindow):
@@ -116,7 +115,7 @@ class RecetasMainWindow(QtWidgets.QMainWindow):
 
     def on_crear_clicked(self):
         """Abrir la ventana para crear una nueva receta"""
-        from scripts.ui_funcionality.receta.receta_crear import RecetaCreateWindow
+        from scripts.ui_functionality.receta.receta_crear import RecetaCreateWindow
         self.create_window = RecetaCreateWindow(self)
         self.create_window.show()
         self.hide()

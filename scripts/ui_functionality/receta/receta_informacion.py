@@ -1,12 +1,11 @@
 import os
-import sys
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
 
 from scripts.model.Receta import Receta
-from scripts.repository.AnimalRepository import AnimalRepository
-from scripts.repository.RecetaRepository import RecetaRepository
-from scripts.ui_funcionality.receta.receta_editar import RecetaEditWindow
+from scripts.repositories.AnimalRepository import AnimalRepository
+from scripts.repositories.RecetaRepository import RecetaRepository
+from scripts.ui_functionality.receta.receta_editar import RecetaEditWindow
 
 
 class RecetaDetailWindow(QtWidgets.QMainWindow):

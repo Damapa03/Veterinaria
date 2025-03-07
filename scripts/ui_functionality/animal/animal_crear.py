@@ -1,10 +1,9 @@
 import os
-import sys
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
 
 from scripts.model.Animal import Animal
-from scripts.repository.AnimalRepository import AnimalRepository
+from scripts.repositories.AnimalRepository import AnimalRepository
 
 
 class AnimalCreateWindow(QtWidgets.QMainWindow):
@@ -35,7 +34,7 @@ class AnimalCreateWindow(QtWidgets.QMainWindow):
             self.ownerInput.clear()
 
             # Obtenemos la lista de clientes desde el repositorio
-            from scripts.repository.ClienteRepository import ClienteRepository
+            from scripts.repositories.ClienteRepository import ClienteRepository
             clienteRepository = ClienteRepository()
             clientes = clienteRepository.getClientesNameAndId()
 

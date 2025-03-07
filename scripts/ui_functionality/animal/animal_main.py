@@ -1,15 +1,13 @@
 import os
 import sys
 from PyQt6 import QtWidgets, uic
-from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QWidget, QHBoxLayout, QLabel, QPushButton, QFrame, QVBoxLayout, QMessageBox
-from typing import List, Optional
+from PyQt6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QFrame
 
 from scripts.DAO import Database
 from scripts.model.Animal import Animal
-from scripts.repository.AnimalRepository import AnimalRepository
-from scripts.repository.ClienteRepository import ClienteRepository
-from scripts.ui_funcionality.animal.animal_informacion import AnimalDetailWindow
+from scripts.repositories.AnimalRepository import AnimalRepository
+from scripts.repositories.ClienteRepository import ClienteRepository
+from scripts.ui_functionality.animal.animal_informacion import AnimalDetailWindow
 
 
 class AnimalsMainWindow(QtWidgets.QMainWindow):
@@ -113,7 +111,7 @@ class AnimalsMainWindow(QtWidgets.QMainWindow):
 
     def on_crear_clicked(self):
         """Abrir la ventana para crear un nuevo animal"""
-        from scripts.ui_funcionality.animal.animal_crear import AnimalCreateWindow
+        from scripts.ui_functionality.animal.animal_crear import AnimalCreateWindow
         self.create_window = AnimalCreateWindow(self)
         self.create_window.show()
         self.hide()

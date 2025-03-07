@@ -1,12 +1,10 @@
 import os
-import sys
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
 
 from scripts.model.Animal import Animal
-from scripts.repository.AnimalRepository import AnimalRepository
-from scripts.repository.ClienteRepository import ClienteRepository
-from scripts.ui_funcionality.animal.animal_editar import AnimalEditWindow
+from scripts.repositories.AnimalRepository import AnimalRepository
+from scripts.repositories.ClienteRepository import ClienteRepository
 
 
 class AnimalDetailWindow(QtWidgets.QMainWindow):
@@ -57,7 +55,7 @@ class AnimalDetailWindow(QtWidgets.QMainWindow):
         """Abrir ventana para modificar el animal"""
         try:
             # Import inside method to avoid circular import issues
-            from scripts.ui_funcionality.animal.animal_editar import AnimalEditWindow
+            from scripts.ui_functionality.animal.animal_editar import AnimalEditWindow
             self.edit_window = AnimalEditWindow(self, self.animal)
             self.edit_window.show()
             self.hide()

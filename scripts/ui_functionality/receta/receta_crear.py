@@ -1,11 +1,10 @@
 import os
-import sys
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
 
 from scripts.model.Receta import Receta
-from scripts.repository.RecetaRepository import RecetaRepository
-from scripts.repository.AnimalRepository import AnimalRepository
+from scripts.repositories.RecetaRepository import RecetaRepository
+from scripts.repositories.AnimalRepository import AnimalRepository
 
 
 class RecetaCreateWindow(QtWidgets.QMainWindow):

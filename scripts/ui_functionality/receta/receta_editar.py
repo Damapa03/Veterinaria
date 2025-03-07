@@ -1,11 +1,10 @@
 import os
-import sys
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
 from PyQt6.QtCore import QDate
 
 from scripts.model.Receta import Receta
-from scripts.repository.RecetaRepository import RecetaRepository
+from scripts.repositories.RecetaRepository import RecetaRepository
 
 
 class RecetaEditWindow(QtWidgets.QMainWindow):
@@ -83,7 +82,7 @@ class RecetaEditWindow(QtWidgets.QMainWindow):
 
             # Obtenemos la lista de animales desde el repositorio
             # Asumiendo que tienes una instancia de AnimalRepository
-            from scripts.repository.AnimalRepository import AnimalRepository
+            from scripts.repositories.AnimalRepository import AnimalRepository
             animalRepository = AnimalRepository()
             animals = animalRepository.getAnimalsNameAndId()
 
