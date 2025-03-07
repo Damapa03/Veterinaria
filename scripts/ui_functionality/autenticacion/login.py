@@ -2,12 +2,12 @@ import os
 import sys
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox, QApplication
-
+import scripts.Autentication as auth
 
 class LoginWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('../../../ui/login.ui', self)
+        uic.loadUi('ui/login.ui', self)
 
         # Connect the bottom label to switch to registration window
         self.passwordLabel_2.mousePressEvent = self.switch_to_register
@@ -42,13 +42,13 @@ class LoginWindow(QtWidgets.QMainWindow):
     def validate_login(self, email, password):
         # Placeholder login validation
         # Replace this with actual authentication logic
-        return email == "test@example.com" and password == "password"
+        return auth.iniciar_sesion(email,password)
 
 
 class RegisterWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
-        uic.loadUi('../../../ui/registro.ui', self)
+        uic.loadUi('ui/registro.ui', self)
 
         # Connect the bottom label to switch to login window
         self.passwordLabel_2.mousePressEvent = self.switch_to_login
@@ -70,6 +70,7 @@ class RegisterWindow(QtWidgets.QMainWindow):
 
         if register_result:
             # If registration is successful, you would typically navigate to the login window or main application
+
             print("Registration successful!")
             self.login_window = LoginWindow()
             self.login_window.show()
@@ -82,15 +83,16 @@ class RegisterWindow(QtWidgets.QMainWindow):
         # Placeholder registration validation
         # Replace this with actual registration logic
         # Example simple validation: email must contain @ and password must be at least 6 characters
-        return '@' in email and len(password) >= 6
+
+        if '@' in email and len(password) >= 6:
+            return auth.registrar_usuario(email, password)
 
 
 def main():
     app = QApplication(sys.argv)
-    login_window = RegisterWindow()
+    login_window = LoginWindow()
     login_window.show()
     sys.exit(app.exec())
-
-
+    
 if __name__ == '__main__':
     main()
