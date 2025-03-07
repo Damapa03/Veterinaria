@@ -141,6 +141,11 @@ class MainWindow(QWidget):
         self.hide()
     
     def addClient(self, client_data):
+        # Verificar si el DNI ya existe en la base de datos
+        existing_client = self.controller.getCliente(client_data[0])
+        if existing_client:
+            return f"Ya existe un cliente con el DNI {client_data[0]}"
+        
         cliente = Cliente(
             dni=client_data[0],
             name=client_data[1],
@@ -149,8 +154,8 @@ class MainWindow(QWidget):
             tlfn=client_data[4]
         )
         
-        success = self.controller.postCliente(cliente)
-        if success:
+        error = self.controller.postCliente(cliente)
+        if error is None:  # Si no hay error
             row = []
             for data in client_data:
                 item = QStandardItem(str(data))
@@ -160,11 +165,17 @@ class MainWindow(QWidget):
             self.clients.append(client_data)
             return True
         else:
-            QMessageBox.warning(self, "Error", "No se pudo añadir el cliente a la base de datos")
-            return False
+            return f"Error: {error}"
     
     def updateClient(self, row, client_data):
         original_dni = self.clients[row][0]
+        
+        # Si el DNI ha cambiado, verificar que el nuevo DNI no exista
+        if original_dni != client_data[0]:
+            existing_client = self.controller.getCliente(client_data[0])
+            if existing_client:
+                return f"Ya existe un cliente con el DNI {client_data[0]}"
+        
         cliente = Cliente(
             dni=client_data[0],
             name=client_data[1],
@@ -173,29 +184,26 @@ class MainWindow(QWidget):
             tlfn=client_data[4]
         )
         
-        success = self.controller.putCliente(original_dni, cliente)
-        if success is None:
+        error = self.controller.putCliente(original_dni, cliente)
+        if error is None:  # Si no hay error
             for col, data in enumerate(client_data):
                 self.model.setItem(row, col, QStandardItem(str(data)))
             
             self.clients[row] = client_data
             return True
         else:
-            QMessageBox.warning(self, "Error", "No se pudo actualizar el cliente en la base de datos")
-            return False
+            return f"Error: {error}"
     
     def deleteClient(self, row):
         dni = self.clients[row][0]
-        success = self.controller.deleteCliente(dni)
         
-        if success is None:
+        try:
+            self.controller.deleteCliente(dni)
             self.model.removeRow(row)
             del self.clients[row]
             return True
-        else:
-            QMessageBox.warning(self, "Error", "No se pudo eliminar el cliente de la base de datos")
-            return False
-
+        except Exception as e:
+            return f"Error: {str(e)}"
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

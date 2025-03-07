@@ -1,12 +1,13 @@
 from PyQt6 import uic
 from PyQt6.QtWidgets import QWidget, QMessageBox
+import re
 
 class CreateForm(QWidget):
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
         
-        # Cargar acrhivo UI
+        # Cargar archivo UI
         uic.loadUi("ui\pantalla_crearCliente.ui", self)
         self.setWindowTitle('Crear Cliente')
         
@@ -25,20 +26,38 @@ class CreateForm(QWidget):
         email = self.textEditEmail.toPlainText().strip()
         telefono = self.textEditTelefono.toPlainText().strip()
         
-        if not dni or not nombre or not apellidos:
-            QMessageBox.warning(self, "Campos requeridos", "Los campos DNI, Nombre y Apellidos son obligatorios")
+        # Validar campos obligatorios
+        if not dni or not nombre or not apellidos or not email:
+            QMessageBox.warning(self, "Campos requeridos", "Los campos DNI, Nombre, Apellidos y Email son obligatorios")
+            return
+        
+        # Validar formato de email
+        if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
+            QMessageBox.warning(self, "Formato de email incorrecto", 
+                               "Por favor, introduce una dirección de email válida.")
+            return
+        
+        # Validar teléfono (debe tener exactamente 9 dígitos numéricos)
+        if not re.match(r'^\d{9}$', telefono):
+            QMessageBox.warning(self, "Formato de teléfono incorrecto", 
+                               "El teléfono debe contener exactamente 9 dígitos numéricos.")
             return
         
         client_data = [dni, nombre, apellidos, email, telefono]
         
-        if self.parent.addClient(client_data):
+        # Intentar crear el cliente
+        result = self.parent.addClient(client_data)
+        if result is True:
             QMessageBox.information(self, "Éxito", "Cliente creado correctamente")
             self.parent.show()
             self.close()
         else:
-            QMessageBox.warning(self, "Error", "No se pudo crear el cliente")
-
-
+            # Mostrar el mensaje de error específico
+            error_msg = "No se pudo crear el cliente"
+            if isinstance(result, str):
+                error_msg += f": {result}"
+            QMessageBox.warning(self, "Error", error_msg)
+            
 class UpdateForm(QWidget):
     def __init__(self, parent, row):
         super().__init__()
@@ -46,7 +65,7 @@ class UpdateForm(QWidget):
         self.row = row
         self.client_data = parent.clients[row]
         
-        # Cargar acrhivo UI
+        # Cargar archivo UI
         uic.loadUi("ui\pantalla_actualizarEliminarCliente.ui", self)
         self.setWindowTitle('Actualizar/Eliminar Cliente')
         
@@ -75,19 +94,37 @@ class UpdateForm(QWidget):
         email = self.textEditEmailActualizar.toPlainText().strip()
         telefono = self.textEditTelefonoActualizar.toPlainText().strip()
         
-        if not dni or not nombre or not apellidos:
-            QMessageBox.warning(self, "Campos requeridos", "Los campos DNI, Nombre y Apellidos son obligatorios")
+        # Validar campos obligatorios
+        if not dni or not nombre or not apellidos or not email:
+            QMessageBox.warning(self, "Campos requeridos", "Los campos DNI, Nombre, Apellidos y Email son obligatorios")
+            return
+        
+        # Validar formato de email
+        if not re.match(r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$', email):
+            QMessageBox.warning(self, "Formato de email incorrecto", 
+                               "Por favor, introduce una dirección de email válida.")
+            return
+        
+        # Validar teléfono (debe tener exactamente 9 dígitos numéricos)
+        if not re.match(r'^\d{9}$', telefono):
+            QMessageBox.warning(self, "Formato de teléfono incorrecto", 
+                               "El teléfono debe contener exactamente 9 dígitos numéricos.")
             return
         
         # Update client
         client_data = [dni, nombre, apellidos, email, telefono]
         
-        if self.parent.updateClient(self.row, client_data):
+        result = self.parent.updateClient(self.row, client_data)
+        if result is True:
             QMessageBox.information(self, "Éxito", "Cliente actualizado correctamente")
             self.parent.show()
             self.close()
         else:
-            QMessageBox.warning(self, "Error", "No se pudo actualizar el cliente")
+            # Mostrar el mensaje de error específico
+            error_msg = "No se pudo actualizar el cliente"
+            if isinstance(result, str):
+                error_msg += f": {result}"
+            QMessageBox.warning(self, "Error", error_msg)
     
     def deleteClient(self):
         reply = QMessageBox.question(self, 'Confirmar eliminación', 
@@ -96,9 +133,14 @@ class UpdateForm(QWidget):
                                     QMessageBox.StandardButton.No)
         
         if reply == QMessageBox.StandardButton.Yes:
-            if self.parent.deleteClient(self.row):
+            result = self.parent.deleteClient(self.row)
+            if result is True:
                 QMessageBox.information(self, "Éxito", "Cliente eliminado correctamente")
                 self.parent.show()
                 self.close()
             else:
-                QMessageBox.warning(self, "Error", "No se pudo eliminar el cliente")
+                # Mostrar el mensaje de error específico
+                error_msg = "No se pudo eliminar el cliente"
+                if isinstance(result, str):
+                    error_msg += f": {result}"
+                QMessageBox.warning(self, "Error", error_msg)

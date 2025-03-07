@@ -27,10 +27,15 @@ class ClienteRepository:
                 (cliente.dni, cliente.name, cliente.surname, cliente.email, cliente.tlfn)
             )
             self.db.conn.commit()
+            print(f"Cliente insertado: {cliente.dni}")  # Para debug
             return None  # Indica éxito
         except sqlite3.IntegrityError as e:
+            print(f"Error de integridad: {e}")  # Para debug
             return str(e)
-
+        except Exception as e:
+            print(f"Error inesperado: {e}")  # Para debug
+            self.db.conn.rollback()  # Asegúrate de hacer rollback en caso de error
+            return str(e)
    
     def putCliente(self, original_dni: str, cliente: Cliente):
         try:
