@@ -138,7 +138,7 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>400</x>
-      <y>30</y>
+      <y>80</y>
       <width>351</width>
       <height>105</height>
      </rect>
@@ -162,7 +162,7 @@ QPushButton:pressed {
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="pacientComboBox"/>
+      <widget class="QComboBox" name="pacientInput"/>
      </item>
     </layout>
    </widget>

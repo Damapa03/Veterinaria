@@ -22,7 +22,7 @@ class RecetaRepository:
     def getActiveRecetas(self):
         self.db.cursor.execute("SELECT * FROM Recetas WHERE finalized = 0")
         return self.db.cursor.fetchall()
-        
+
     def getRecetasFinalized(self):
         self.db.cursor.execute("SELECT * FROM Recetas WHERE finalized = 1")
         return self.db.cursor.fetchall()

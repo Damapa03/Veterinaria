@@ -4,6 +4,7 @@ from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox
 
 from scripts.model.Receta import Receta
+from scripts.repository.AnimalRepository import AnimalRepository
 from scripts.repository.RecetaRepository import RecetaRepository
 from scripts.ui_functionality.receta.receta_editar import RecetaEditWindow
 
@@ -28,6 +29,7 @@ class RecetaDetailWindow(QtWidgets.QMainWindow):
 
         # Inicializar repositorio
         self.recetaRepository = RecetaRepository()
+        self.animalRepository = AnimalRepository()
 
         # Configurar título de la ventana
         self.setWindowTitle(f"Detalles de Receta #{receta.id}")
@@ -50,8 +52,8 @@ class RecetaDetailWindow(QtWidgets.QMainWindow):
             # Mostrar estado de finalización
             estado = "Finalizada" if self.receta.finalized else "En curso"
             self.finalizedLabel.setText(f"Estado: {estado}")
-
-            self.pacientLabel.setText(f"Paciente: {self.receta.pacient}")
+            self.animalName = self.animalRepository.getAnimalName(self.receta.pacient)[0] #Saca el nombre
+            self.pacientLabel.setText(f"Paciente: {self.animalName}")
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Error al mostrar información: {str(e)}")
 

@@ -36,27 +36,79 @@ class RecetaEditWindow(QtWidgets.QMainWindow):
         """Cargar datos de la receta en los campos del formulario"""
         try:
             # Obtener receta desde el repositorio
-            receta = self.recetaRepository.getReceta(self.receta_id)
-            
+            receta_data = self.recetaRepository.getReceta(self.receta_id)
+
+            receta = Receta(
+                id=receta_data[0],
+                treatment=receta_data[1],
+                start_date=receta_data[2],
+                finalized=receta_data[3],
+                pacient=receta_data[4]
+            )
+
             if receta:
                 # Rellenar los campos del formulario con los datos de la receta
                 self.treatmentInput.setText(receta.treatment)
-                
+
                 # Convertir la fecha de string a QDate si es necesario
                 if isinstance(receta.start_date, str):
                     date_parts = receta.start_date.split('-')
                     if len(date_parts) == 3:
                         qdate = QDate(int(date_parts[0]), int(date_parts[1]), int(date_parts[2]))
                         self.startDateInput.setDate(qdate)
-                
-                self.finalizedCheckBox.setChecked(receta.finalized)
-                self.pacientInput.setText(receta.pacient)
+
+                # Convertir finalized a booleano si es string
+                finalized_value = receta.finalized
+                if isinstance(finalized_value, str):
+                    finalized_value = finalized_value.lower() in ('true', 't', '1', 'yes')
+                self.finalizedInput.setChecked(finalized_value)
+
+                # Poblar el comboBox de pacientes
+                self.populate_pacient_combo()
+
+                # Configurar el valor actual basado en el paciente de la receta
+                self.set_current_pacient(receta.pacient)
             else:
                 QMessageBox.critical(self, "Error", "No se pudo encontrar la receta solicitada")
                 self.on_volver_clicked()
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Error al cargar datos de la receta: {str(e)}")
             self.on_volver_clicked()
+
+    def populate_pacient_combo(self):
+        """Poblar el comboBox con los nombres de los animales"""
+        try:
+            # Primero limpiamos el comboBox
+            self.pacientInput.clear()
+
+            # Obtenemos la lista de animales desde el repositorio
+            # Asumiendo que tienes una instancia de AnimalRepository
+            from scripts.repository.AnimalRepository import AnimalRepository
+            animalRepository = AnimalRepository()
+            animals = animalRepository.getAnimalsNameAndId()
+
+            # Añadimos cada animal al comboBox
+            for animal_id, animal_name in animals:
+                # El texto visible es el nombre, pero el dato es el ID
+                self.pacientInput.addItem(animal_name, animal_id)
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Error al cargar la lista de pacientes: {str(e)}")
+
+    def set_current_pacient(self, pacient_id):
+        """Establecer el valor actual en el comboBox basado en el ID del paciente"""
+        try:
+            # Convertir a entero si es necesario
+            if isinstance(pacient_id, str) and pacient_id.isdigit():
+                pacient_id = int(pacient_id)
+
+            # Buscar el índice que corresponde al ID del paciente
+            index = self.pacientInput.findData(pacient_id)
+
+            # Si encontramos el índice, configuramos el comboBox
+            if index >= 0:
+                self.pacientInput.setCurrentIndex(index)
+        except Exception as e:
+            QMessageBox.warning(self, "Advertencia", f"No se pudo seleccionar el paciente actual: {str(e)}")
 
     def on_volver_clicked(self):
         """Volver a la pantalla principal"""
@@ -68,8 +120,8 @@ class RecetaEditWindow(QtWidgets.QMainWindow):
         # Recoger valores del formulario
         treatment_value = self.treatmentInput.text().strip()
         start_date_value = self.startDateInput.date().toString("yyyy-MM-dd")
-        finalized_value = self.finalizedCheckBox.isChecked()
-        pacient_value = self.pacientInput.text().strip()
+        finalized_value = self.finalizedInput.isChecked()
+        pacient_value = self.pacientInput.currentData()
 
         # Validar datos
         if not treatment_value or not pacient_value:
@@ -88,13 +140,14 @@ class RecetaEditWindow(QtWidgets.QMainWindow):
             )
 
             # Actualizar en la base de datos
-            result = self.recetaRepository.updateReceta(receta)
+            result = self.recetaRepository.putReceta(receta.id,receta)
 
             if result:
                 QMessageBox.information(self, "Éxito",
                                         "Receta médica actualizada correctamente")
-                self.parent.load_recetas()  # Recargar lista en ventana principal
-                self.parent.show()
+                self.parent.parent.load_recetas()  # Recargar lista en ventana principal
+                self.parent.parent.show()
+                self.parent.close()
                 self.close()
             else:
                 QMessageBox.critical(self, "Error",

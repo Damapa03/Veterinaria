@@ -15,7 +15,6 @@ class AnimalRepository:
         self.db.cursor.execute("SELECT * FROM Animales WHERE id = ?", (id,))
         return self.db.cursor.fetchone()
 
-
     def getAnimalName(self, id: int):
         self.db.cursor.execute("SELECT name FROM Animales WHERE id = ?", (id,))
         return self.db.cursor.fetchone()
@@ -23,7 +22,6 @@ class AnimalRepository:
     def getAnimalsNameAndId(self):
         self.db.cursor.execute("SELECT id, name FROM Animales")
         result = self.db.cursor.fetchall()
-        print(f"Animals fetched: {result}")  # Salida de depuración
         return result
         
     def getAnimalsByOwner(self, owner: str):

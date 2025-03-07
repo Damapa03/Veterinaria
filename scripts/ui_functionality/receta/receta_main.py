@@ -7,9 +7,9 @@ from typing import List, Optional
 
 from scripts.DAO import Database
 from scripts.model.Receta import Receta
+from scripts.repository.AnimalRepository import AnimalRepository
 from scripts.repository.RecetaRepository import RecetaRepository
 from scripts.ui_functionality.receta.receta_informacion import RecetaDetailWindow
-
 
 class RecetasMainWindow(QtWidgets.QMainWindow):
     """Ventana principal para la gestión de recetas médicas"""
@@ -22,6 +22,7 @@ class RecetasMainWindow(QtWidgets.QMainWindow):
 
         # Inicializar repositorio
         self.recetaRepository = RecetaRepository()
+        self.animalRepository = AnimalRepository()
 
         # Configurar título de la ventana
         self.setWindowTitle("Recetas Médicas")
@@ -86,7 +87,8 @@ class RecetasMainWindow(QtWidgets.QMainWindow):
         estado = "Finalizada" if receta.finalized else "En curso"
 
         # Crear etiqueta con información de la receta
-        info_text = f"Receta #{receta.id} - {receta.treatment} - Paciente: {receta.pacient} - Estado: {estado}"
+        self.animalName = self.animalRepository.getAnimalName(receta.pacient)[0]
+        info_text = f"Receta #{receta.id} - {receta.treatment} - Paciente: {self.animalName} - Estado: {estado}"
         info_label = QLabel(info_text)
         info_label.setStyleSheet("font-size: 12px;")
 
