@@ -36,7 +36,7 @@ class RecetaEditWindow(QtWidgets.QMainWindow):
         """Cargar datos de la receta en los campos del formulario"""
         try:
             # Obtener receta desde el repositorio
-            receta = self.recetaRepository.getRecetaById(self.receta_id)
+            receta = self.recetaRepository.getReceta(self.receta_id)
             
             if receta:
                 # Rellenar los campos del formulario con los datos de la receta

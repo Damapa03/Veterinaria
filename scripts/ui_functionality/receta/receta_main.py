@@ -6,25 +6,25 @@ from PyQt6.QtWidgets import QWidget, QHBoxLayout, QLabel, QPushButton, QFrame, Q
 from typing import List, Optional
 
 from scripts.DAO import Database
-from scripts.model.Animal import Animal
-from scripts.repository.AnimalRepository import AnimalRepository
-from scripts.ui_funcionality.animal.animal_informacion import AnimalDetailWindow
+from scripts.model.Receta import Receta
+from scripts.repository.RecetaRepository import RecetaRepository
+from scripts.ui_functionality.receta.receta_informacion import RecetaDetailWindow
 
 
-class AnimalsMainWindow(QtWidgets.QMainWindow):
-    """Ventana principal para la gestión de animales"""
+class RecetasMainWindow(QtWidgets.QMainWindow):
+    """Ventana principal para la gestión de recetas médicas"""
 
     def __init__(self):
         super().__init__()
         current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/animal_main.ui')
+        ui_path = os.path.join(current_dir, '../../../ui/recetas_main.ui')
         uic.loadUi(ui_path, self)
 
         # Inicializar repositorio
-        self.animalRepository = AnimalRepository()
+        self.recetaRepository = RecetaRepository()
 
         # Configurar título de la ventana
-        self.setWindowTitle("Animales")
+        self.setWindowTitle("Recetas Médicas")
 
         # Conectar señales de botones
         self.crearButton.clicked.connect(self.on_crear_clicked)
@@ -32,33 +32,33 @@ class AnimalsMainWindow(QtWidgets.QMainWindow):
         if hasattr(self, 'buscarButton'):
             self.buscarButton.clicked.connect(self.on_buscar_clicked)
 
-        # Cargar la lista de animales
-        self.load_animals()
+        # Cargar la lista de recetas
+        self.load_recetas()
 
-    def load_animals(self):
-        """Cargar y mostrar la lista de animales desde la base de datos"""
+    def load_recetas(self):
+        """Cargar y mostrar la lista de recetas desde la base de datos"""
         # Limpiar elementos existentes del layout
         self.clear_rows_layout()
 
-        # Obtener animales de la base de datos
-        animals_data = self.animalRepository.getAnimals()
+        # Obtener recetas de la base de datos
+        recetas_data = self.recetaRepository.getRecetas()
 
-        # Crear objetos animal
-        animals = []
-        for anim_data in animals_data:
-            # Orden de columnas: id, name, species, description, owner
-            animal = Animal(
-                id=anim_data[0],
-                name=anim_data[1],
-                species=anim_data[2],
-                description=anim_data[3],
-                owner=anim_data[4]
+        # Crear objetos receta
+        recetas = []
+        for rec_data in recetas_data:
+            # Orden de columnas: id, treatment, start_date, finalized, pacient
+            receta = Receta(
+                id=rec_data[0],
+                treatment=rec_data[1],
+                start_date=rec_data[2],
+                finalized=rec_data[3],
+                pacient=rec_data[4]
             )
-            animals.append(animal)
+            recetas.append(receta)
 
-        # Crear fila para cada animal
-        for animal in animals:
-            self.add_animal_row(animal)
+        # Crear fila para cada receta
+        for receta in recetas:
+            self.add_receta_row(receta)
 
         # Añadir espacio de estiramiento al final para empujar filas hacia arriba
         self.rows.addStretch()
@@ -71,8 +71,8 @@ class AnimalsMainWindow(QtWidgets.QMainWindow):
             if widget:
                 widget.deleteLater()
 
-    def add_animal_row(self, animal: Animal):
-        """Añadir una fila para un animal en la lista"""
+    def add_receta_row(self, receta: Receta):
+        """Añadir una fila para una receta en la lista"""
         # Crear marco para la fila
         row_frame = QFrame()
         row_frame.setFrameShape(QFrame.Shape.StyledPanel)
@@ -82,8 +82,11 @@ class AnimalsMainWindow(QtWidgets.QMainWindow):
         # Crear layout horizontal para la fila
         row_layout = QHBoxLayout(row_frame)
 
-        # Crear etiqueta con información del animal
-        info_text = f"{animal.name} - {animal.species} - Dueño: {animal.owner}"
+        # Determinar estado para mostrar
+        estado = "Finalizada" if receta.finalized else "En curso"
+
+        # Crear etiqueta con información de la receta
+        info_text = f"Receta #{receta.id} - {receta.treatment} - Paciente: {receta.pacient} - Estado: {estado}"
         info_label = QLabel(info_text)
         info_label.setStyleSheet("font-size: 12px;")
 
@@ -92,7 +95,7 @@ class AnimalsMainWindow(QtWidgets.QMainWindow):
         mas_button.setFixedWidth(60)
 
         # Conectar botón para mostrar detalles
-        mas_button.clicked.connect(lambda checked, a=animal: self.show_animal_details(a))
+        mas_button.clicked.connect(lambda checked, r=receta: self.show_receta_details(r))
 
         # Añadir widgets al layout de fila
         row_layout.addWidget(info_label)
@@ -102,55 +105,55 @@ class AnimalsMainWindow(QtWidgets.QMainWindow):
         # Añadir fila al layout vertical principal
         self.rows.addWidget(row_frame)
 
-    def show_animal_details(self, animal: Animal):
-        """Mostrar la ventana de detalles para un animal específico"""
-        self.detail_window = AnimalDetailWindow(self, animal)
+    def show_receta_details(self, receta: Receta):
+        """Mostrar la ventana de detalles para una receta específica"""
+        self.detail_window = RecetaDetailWindow(self, receta)
         self.detail_window.show()
         self.hide()
 
     def on_crear_clicked(self):
-        """Abrir la ventana para crear un nuevo animal"""
-        from scripts.ui_funcionality.animal.animal_crear import AnimalCreateWindow
-        self.create_window = AnimalCreateWindow(self)
+        """Abrir la ventana para crear una nueva receta"""
+        from scripts.ui_functionality.receta.receta_crear import RecetaCreateWindow
+        self.create_window = RecetaCreateWindow(self)
         self.create_window.show()
         self.hide()
 
     def on_buscar_clicked(self):
-        """Buscar animales por propietario o especie"""
+        """Buscar recetas por paciente o tratamiento"""
         search_term = self.searchInput.text().strip()
         if not search_term:
-            self.load_animals()  # Si el campo está vacío, cargar todos los animales
+            self.load_recetas()  # Si el campo está vacío, cargar todas las recetas
             return
 
         # Limpiar elementos existentes del layout
         self.clear_rows_layout()
         
-        # Buscar por propietario
-        by_owner = self.animalRepository.getAnimalsByOwner(search_term)
-        # Buscar por especie
-        by_species = self.animalRepository.getAnimalsBySpecies(search_term)
+        # Buscar por paciente
+        by_pacient = self.recetaRepository.getRecetasByPacient(search_term)
+        # Buscar por tratamiento
+        by_treatment = self.recetaRepository.getRecetasByTreatment(search_term)
         
         # Combinar resultados (eliminando duplicados por ID)
         all_results = {}
         
-        for anim_data in by_owner + by_species:
-            if anim_data[0] not in all_results:
-                animal = Animal(
-                    id=anim_data[0],
-                    name=anim_data[1],
-                    species=anim_data[2],
-                    description=anim_data[3],
-                    owner=anim_data[4]
+        for rec_data in by_pacient + by_treatment:
+            if rec_data[0] not in all_results:
+                receta = Receta(
+                    id=rec_data[0],
+                    treatment=rec_data[1],
+                    start_date=rec_data[2],
+                    finalized=rec_data[3],
+                    pacient=rec_data[4]
                 )
-                all_results[anim_data[0]] = animal
+                all_results[rec_data[0]] = receta
         
         # Mostrar resultados
         if all_results:
-            for animal in all_results.values():
-                self.add_animal_row(animal)
+            for receta in all_results.values():
+                self.add_receta_row(receta)
         else:
             # Si no hay resultados, mostrar mensaje
-            no_results_label = QLabel("No se encontraron animales que coincidan con la búsqueda.")
+            no_results_label = QLabel("No se encontraron recetas que coincidan con la búsqueda.")
             no_results_label.setAlignment(Qt.AlignmentFlag.AlignCenter)
             no_results_label.setStyleSheet("font-size: 12px; color: gray;")
             self.rows.addWidget(no_results_label)
@@ -171,7 +174,7 @@ def main():
     db = Database()
 
     # Crear y mostrar ventana principal
-    window = AnimalsMainWindow()
+    window = RecetasMainWindow()
     window.show()
 
     sys.exit(app.exec())

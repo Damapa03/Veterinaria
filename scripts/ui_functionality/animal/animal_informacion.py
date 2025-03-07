@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QMessageBox
 
 from scripts.model.Animal import Animal
 from scripts.repository.AnimalRepository import AnimalRepository
-from scripts.ui_funcionality.animal.animal_editar import AnimalEditWindow
+from scripts.ui_functionality.animal.animal_editar import AnimalEditWindow
 
 
 class AnimalDetailWindow(QtWidgets.QMainWindow):

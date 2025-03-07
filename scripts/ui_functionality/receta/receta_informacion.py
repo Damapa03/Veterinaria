@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import QMessageBox
 
 from scripts.model.Receta import Receta
 from scripts.repository.RecetaRepository import RecetaRepository
-from scripts.ui_funcionality.receta.receta_editar import RecetaEditWindow
+from scripts.ui_functionality.receta.receta_editar import RecetaEditWindow
 
 
 class RecetaDetailWindow(QtWidgets.QMainWindow):
@@ -43,15 +43,15 @@ class RecetaDetailWindow(QtWidgets.QMainWindow):
     def display_receta_info(self):
         """Mostrar la información de la receta en la interfaz"""
         try:
-            self.id.setText(f"ID: {self.receta.id}")
-            self.treatment.setText(f"Tratamiento: {self.receta.treatment}")
-            self.start_date.setText(f"Fecha de inicio: {self.receta.start_date}")
+            self.idLabel.setText(f"ID: {self.receta.id}")
+            self.treatmentLabel.setText(f"Tratamiento: {self.receta.treatment}")
+            self.startDateLabel.setText(f"Fecha de inicio: {self.receta.start_date}")
 
             # Mostrar estado de finalización
             estado = "Finalizada" if self.receta.finalized else "En curso"
-            self.finalized.setText(f"Estado: {estado}")
+            self.finalizedLabel.setText(f"Estado: {estado}")
 
-            self.pacient.setText(f"Paciente: {self.receta.pacient}")
+            self.pacientLabel.setText(f"Paciente: {self.receta.pacient}")
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Error al mostrar información: {str(e)}")
 
