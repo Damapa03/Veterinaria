@@ -22,7 +22,7 @@ class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
-        Form.resize(456, 441)
+        Form.resize(456, 436)
         self.gridLayoutWidget_2 = QWidget(Form)
         self.gridLayoutWidget_2.setObjectName(u"gridLayoutWidget_2")
         self.gridLayoutWidget_2.setGeometry(QRect(30, 50, 411, 306))

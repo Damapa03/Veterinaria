@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import (
     QTableWidgetItem, QLabel, QPushButton, QHBoxLayout
 )
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
-from repository.ClienteRepository import ClienteRepository
+from repositories.ClienteRepository import ClienteRepository
 from model.Cliente import Cliente
 from ui_functionality.Crear_Actualizar_EliminarClientes import UpdateForm
 from ui_functionality.Crear_Actualizar_EliminarClientes import CreateForm
@@ -38,7 +38,9 @@ class AnimalSearchDialog(QDialog):
 class MainWindow(QWidget):
     def __init__(self):
         super().__init__()
-        uic.loadUi('ui/pantalla_principal.ui', self)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(script_dir), 'ui', 'pantalla_principal.ui')
+        uic.loadUi(ui_path, self)        
         self.clients = []
         
         try:
@@ -101,7 +103,7 @@ class MainWindow(QWidget):
             # a través del controlador existente
             query = """
             SELECT a.name as nombre, a.species as especie, a.description as raza, 
-                   a.id as edad, 'No disponible' as sexo
+                a.id as edad, 'No disponible' as sexo
             FROM Animales a
             WHERE a.owner = ?
             """
@@ -113,12 +115,13 @@ class MainWindow(QWidget):
             # Convertir los resultados en una lista de tuplas
             result = []
             for animal in animals:
+                # Acceder a los elementos por índice, no por nombre de columna
                 result.append((
-                    animal['nombre'],
-                    animal['especie'],
-                    animal['raza'],
-                    animal['edad'],
-                    animal['sexo']
+                    animal[0],  # nombre
+                    animal[1],  # especie
+                    animal[2],  # raza
+                    animal[3],  # edad
+                    animal[4]   # sexo
                 ))
             
             return result

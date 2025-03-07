@@ -1,0 +1,1 @@
+# Carpeta para guardar el script sql y el el script temporal para crear la base de datos

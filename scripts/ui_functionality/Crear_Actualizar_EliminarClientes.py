@@ -1,14 +1,18 @@
 from PyQt6 import uic
 from PyQt6.QtWidgets import QWidget, QMessageBox
 import re
+import os
 
 class CreateForm(QWidget):
     def __init__(self, parent):
         super().__init__()
         self.parent = parent
         
-        # Cargar archivo UI
-        uic.loadUi("ui\pantalla_crearCliente.ui", self)
+        # Cargar archivo UI usando ruta relativa al script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(script_dir)), 'ui', 'pantalla_crearCliente.ui')
+        uic.loadUi(ui_path, self)
+        
         self.setWindowTitle('Crear Cliente')
         
         self.pushButtonCrear.clicked.connect(self.createClient)
@@ -65,8 +69,11 @@ class UpdateForm(QWidget):
         self.row = row
         self.client_data = parent.clients[row]
         
-        # Cargar archivo UI
-        uic.loadUi("ui\pantalla_actualizarEliminarCliente.ui", self)
+        # Cargar archivo UI usando ruta relativa al script
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(script_dir)), 'ui', 'pantalla_actualizarEliminarCliente.ui')
+        uic.loadUi(ui_path, self)
+        
         self.setWindowTitle('Actualizar/Eliminar Cliente')
         
         self.fillClientData()
