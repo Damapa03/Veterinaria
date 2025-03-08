@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Información de Clínica</string>
+   <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="volverButton">
@@ -68,9 +68,9 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QLabel" name="name">
+          <widget class="QLabel" name="nameAndSurname">
            <property name="text">
-            <string>Nombre de la Clínica</string>
+            <string>Nombre y Apellidos</string>
            </property>
           </widget>
          </item>
@@ -79,29 +79,24 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_3">
          <item>
-          <widget class="QLabel" name="id">
+          <widget class="QLabel" name="dni">
            <property name="text">
-            <string>ID</string>
+            <string>DNI</string>
            </property>
           </widget>
          </item>
         </layout>
        </item>
        <item>
-        <spacer name="verticalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Orientation::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Policy::Minimum</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="clinica">
+           <property name="text">
+            <string>Asignado en 'Clínica'</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </item>
@@ -110,9 +105,9 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QLabel" name="municipio">
+          <widget class="QLabel" name="email">
            <property name="text">
-            <string>Municipio</string>
+            <string>Email</string>
            </property>
           </widget>
          </item>
@@ -121,9 +116,9 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
-          <widget class="QLabel" name="provincia">
+          <widget class="QLabel" name="label_5">
            <property name="text">
-            <string>Provincia</string>
+            <string>Telefono</string>
            </property>
           </widget>
          </item>
