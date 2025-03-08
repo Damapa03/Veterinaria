@@ -1,4 +1,3 @@
-@ -1,162 +1,152 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
  <class>RecetaWindow</class>
@@ -79,10 +78,8 @@ QPushButton:pressed {
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>30</y>
       <y>40</y>
       <width>352</width>
-      <height>139</height>
       <height>91</height>
      </rect>
     </property>
@@ -94,27 +91,15 @@ QPushButton:pressed {
       <set>Qt::AlignmentFlag::AlignCenter</set>
      </property>
      <item row="0" column="0">
-      <widget class="QLabel" name="idLabel">
-       <property name="text">
-        <string>ID:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="idInput"/>
-     </item>
-     <item row="1" column="0">
       <widget class="QLabel" name="treatmentLabel">
        <property name="text">
         <string>Tratamiento:</string>
        </property>
       </widget>
      </item>
-     <item row="1" column="1">
      <item row="0" column="1">
       <widget class="QLineEdit" name="treatmentInput"/>
      </item>
-     <item row="2" column="0">
      <item row="1" column="0">
       <widget class="QLabel" name="startDateLabel">
        <property name="text">
@@ -122,7 +107,6 @@ QPushButton:pressed {
        </property>
       </widget>
      </item>
-     <item row="2" column="1">
      <item row="1" column="1">
       <widget class="QDateEdit" name="startDateInput"/>
      </item>
@@ -131,12 +115,9 @@ QPushButton:pressed {
    <widget class="QWidget" name="formLayoutWidget_2">
     <property name="geometry">
      <rect>
-      <x>390</x>
-      <y>30</y>
       <x>400</x>
       <y>60</y>
       <width>331</width>
-      <height>139</height>
       <height>81</height>
      </rect>
     </property>
@@ -149,7 +130,6 @@ QPushButton:pressed {
       </widget>
      </item>
      <item row="1" column="1">
-      <widget class="QComboBox" name="pacientComboBox"/>
       <widget class="QComboBox" name="pacientInput"/>
      </item>
      <item row="0" column="0">
