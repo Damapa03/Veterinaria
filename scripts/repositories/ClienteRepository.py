@@ -1,7 +1,6 @@
+from DAO import Database
 import sqlite3
-
-from scripts.DAO import Database
-from scripts.model.Cliente import Cliente
+from model.Cliente import Cliente
 
 class ClienteRepository:
     def __init__(self):
@@ -20,23 +19,6 @@ class ClienteRepository:
             col_names = [desc[0] for desc in self.db.cursor.description]
             return dict(zip(col_names, row))
         return None
-
-    def getClienteName(self, dni: str):
-        self.db.cursor.execute("SELECT name FROM Clientes WHERE DNI = ?", (dni,))
-        row = self.db.cursor.fetchone()
-        if row:
-            col_names = [desc[0] for desc in self.db.cursor.description]
-            return dict(zip(col_names, row))
-        return None
-
-    def getClientesNameAndId(self):
-        try:
-            self.db.cursor.execute("SELECT dni, name FROM Clientes")
-            clients = self.db.cursor.fetchall()
-            return clients  # Return list of tuples (id, name)
-        except Exception as e:
-            print(f"Error in getClientesNameAndId: {str(e)}")
-            return []
     
     def postCliente(self, cliente: Cliente):
         try:
