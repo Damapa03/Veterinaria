@@ -32,26 +32,6 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.horizontalLayout = QHBoxLayout()
         self.horizontalLayout.setObjectName(u"horizontalLayout")
-        self.pushButton = QPushButton(self.centralwidget)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setStyleSheet(u"QPushButton {\n"
-"    background-color: lightgray;\n"
-"    color: black;\n"
-"    border: 2px solid gray;\n"
-"    border-radius: 10px;\n"
-"    padding: 5px;\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"    background-color: silver;\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: darkgray;\n"
-"}")
-
-        self.horizontalLayout.addWidget(self.pushButton)
-
         self.labelColumnas = QLabel(self.centralwidget)
         self.labelColumnas.setObjectName(u"labelColumnas")
 
@@ -71,21 +51,6 @@ class Ui_MainWindow(object):
 
         self.btnNuevaCita = QPushButton(self.centralwidget)
         self.btnNuevaCita.setObjectName(u"btnNuevaCita")
-        self.btnNuevaCita.setStyleSheet(u"QPushButton {\n"
-"    background-color: lightgray;\n"
-"    color: black;\n"
-"    border: 2px solid gray;\n"
-"    border-radius: 10px;\n"
-"    padding: 5px;\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"    background-color: silver;\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: darkgray;\n"
-"}")
         icon = QIcon(QIcon.fromTheme(u"list-add"))
         self.btnNuevaCita.setIcon(icon)
 
@@ -96,11 +61,11 @@ class Ui_MainWindow(object):
 
         self.scrollArea = QScrollArea(self.centralwidget)
         self.scrollArea.setObjectName(u"scrollArea")
-        self.scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
         self.scrollAreaWidgetContents = QWidget()
         self.scrollAreaWidgetContents.setObjectName(u"scrollAreaWidgetContents")
-        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 780, 521))
+        self.scrollAreaWidgetContents.setGeometry(QRect(0, 0, 780, 533))
         self.gridLayout = QGridLayout(self.scrollAreaWidgetContents)
         self.gridLayout.setObjectName(u"gridLayout")
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -119,7 +84,6 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Gesti\u00f3n de Citas M\u00e9dicas", None))
-        self.pushButton.setText(QCoreApplication.translate("MainWindow", u"PushButton", None))
         self.labelColumnas.setText(QCoreApplication.translate("MainWindow", u"Columnas:", None))
         self.btnNuevaCita.setText(QCoreApplication.translate("MainWindow", u"A\u00f1adir Cita", None))
     # retranslateUi

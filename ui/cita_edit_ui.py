@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 ################################################################################
-## Form generated from reading UI file 'cita_edit.ui'
+## Form generated from reading UI file 'edit.ui'
 ##
 ## Created by: Qt User Interface Compiler version 6.8.1
 ##
@@ -101,41 +101,11 @@ class Ui_Form(object):
 
         self.btnGuardar = QPushButton(Form)
         self.btnGuardar.setObjectName(u"btnGuardar")
-        self.btnGuardar.setStyleSheet(u"QPushButton {\n"
-"    background-color: lightgreen;\n"
-"    color: Black;\n"
-"    border: 2px solid #006400;\n"
-"    border-radius: 10px;\n"
-"    padding: 5px;\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"    background-color: #00b300;\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: #004d00;\n"
-"}")
 
         self.horizontalLayout.addWidget(self.btnGuardar)
 
         self.btnCancelar = QPushButton(Form)
         self.btnCancelar.setObjectName(u"btnCancelar")
-        self.btnCancelar.setStyleSheet(u"QPushButton {\n"
-"    background-color: #ff5e5e;\n"
-"    color: black;\n"
-"    border: 2px solid #8B0000;\n"
-"    border-radius: 10px;\n"
-"    padding: 5px;\n"
-"}\n"
-"\n"
-"QPushButton:hover {\n"
-"    background-color: #df5252;\n"
-"}\n"
-"\n"
-"QPushButton:pressed {\n"
-"    background-color: #cc0000;\n"
-"}")
 
         self.horizontalLayout.addWidget(self.btnCancelar)
 
