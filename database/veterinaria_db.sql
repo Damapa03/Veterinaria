@@ -36,7 +36,6 @@ CREATE TABLE IF NOT EXISTS Animales (
     name TEXT NOT NULL CHECK(length(name) <= 50),
     species TEXT NOT NULL CHECK(length(species) <= 50),
     description TEXT CHECK(length(description) <= 2000),
-    photo BLOB,
     owner TEXT NOT NULL,
     FOREIGN KEY (owner) REFERENCES Clientes(DNI)
 );
@@ -46,9 +45,8 @@ CREATE TABLE IF NOT EXISTS Recetas (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     treatment TEXT NOT NULL CHECK(length(treatment) <= 50),
     start_date DATE NOT NULL,
-    finalized DATE,
+    finalized BOOLEAN,
     pacient INTEGER NOT NULL,
-    CHECK(finalized IS NULL OR finalized >= start_date),
     FOREIGN KEY (pacient) REFERENCES Animales(id)
 );
 
@@ -87,9 +85,9 @@ INSERT INTO Animales (name, species, description, owner) VALUES
 
 -- Ejemplo Recetas
 INSERT INTO Recetas (treatment, start_date, finalized, pacient) VALUES
-('Antibiotico Amoxicilina', '2025-01-15', '2025-01-30', 1),
-('Antiparasitario', '2025-02-10', NULL, 2),
-('Antiinflamatorio', '2025-02-05', '2025-02-15', 3);
+('Antibiotico Amoxicilina', '2025-01-15', TRUE, 1),
+('Antiparasitario', '2025-02-10', FALSE, 2),
+('Antiinflamatorio', '2025-02-05', TRUE, 3);
 
 -- Ejemplo Citas
 INSERT INTO Cita (date, price, reason, animal, professional) VALUES
