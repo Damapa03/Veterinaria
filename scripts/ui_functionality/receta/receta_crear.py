@@ -11,11 +11,18 @@ class RecetaCreateWindow(QtWidgets.QMainWindow):
     """Ventana para crear una nueva receta médica"""
 
     def __init__(self, parent=None):
-        super().__init__()
-        self.parent = parent
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/recetas_crear.ui')
-        uic.loadUi(ui_path, self)
+        # Properly pass the parent to the QMainWindow constructor
+        super().__init__(parent)
+        self.parent_window = parent  # Store parent reference with a clearer name
+
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/recetas_crear.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
 
         # Inicializar repositorios
         self.recetaRepository = RecetaRepository()
@@ -70,7 +77,8 @@ class RecetaCreateWindow(QtWidgets.QMainWindow):
 
     def on_volver_clicked(self):
         """Volver a la pantalla principal"""
-        self.parent.show()
+        if self.parent_window:
+            self.parent_window.show()
         self.close()
 
     def on_aceptar_clicked(self):
@@ -105,8 +113,9 @@ class RecetaCreateWindow(QtWidgets.QMainWindow):
             if result:
                 QMessageBox.information(self, "Éxito",
                                         "Receta médica registrada correctamente")
-                self.parent.load_recetas()  # Recargar lista en ventana principal
-                self.parent.show()
+                if self.parent_window:
+                    self.parent_window.load_recetas()  # Recargar lista en ventana principal
+                    self.parent_window.show()
                 self.close()
             else:
                 QMessageBox.critical(self, "Error",

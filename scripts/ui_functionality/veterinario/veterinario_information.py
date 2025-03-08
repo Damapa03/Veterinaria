@@ -12,8 +12,9 @@ class VeterinarioDetailWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None, veterinario=None):
         super().__init__(parent)
         # Cargar archivo UI
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/veterinarios_information.ui')
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/veterinarios_information.ui')
         uic.loadUi(ui_path, self)
 
         # Guardar referencia a la ventana padre
@@ -71,7 +72,7 @@ class VeterinarioDetailWindow(QtWidgets.QMainWindow):
 
     def on_modificar_clicked(self):
         """Abrir la pantalla de edición para este veterinario"""
-        from veterinario_editar import VeterinarioEditWindow
+        from scripts.ui_functionality.veterinario.veterinario_editar import VeterinarioEditWindow
         self.edit_window = VeterinarioEditWindow(self, self.veterinario)
         self.edit_window.show()
         self.hide()  # Ocultar la ventana de detalles mientras se edita

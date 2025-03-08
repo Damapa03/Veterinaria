@@ -11,12 +11,19 @@ class AnimalDetailWindow(QtWidgets.QMainWindow):
     """Ventana para mostrar detalles de un animal"""
 
     def __init__(self, parent=None, animal=None):
-        super().__init__()
-        self.parent = parent
+        super().__init__()  # Remove parent parameter here
+        self.parent_window = parent  # Store parent explicitly
         self.animal = animal
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/animal_information.ui')
-        uic.loadUi(ui_path, self)
+        self.edit_window = None  # Initialize the edit window reference
+
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/animal_information.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
 
         # Inicializar repositorio
         self.animalRepository = AnimalRepository()
@@ -48,8 +55,9 @@ class AnimalDetailWindow(QtWidgets.QMainWindow):
 
     def on_volver_clicked(self):
         """Volver a la pantalla principal"""
-        self.parent.show()
-        self.close()
+        self.hide()  # Hide instead of close to prevent issues
+        if self.parent_window:
+            self.parent_window.show()
 
     def on_modificar_clicked(self):
         """Abrir ventana para modificar el animal"""
@@ -66,9 +74,9 @@ class AnimalDetailWindow(QtWidgets.QMainWindow):
     def on_borrar_clicked(self):
         """Eliminar el animal actual previa confirmación"""
         reply = QMessageBox.question(self, 'Confirmar eliminación',
-                                    f'¿Está seguro de que desea eliminar al animal {self.animal.name}?',
-                                    QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
-                                    QMessageBox.StandardButton.No)
+                                     f'¿Está seguro de que desea eliminar al animal {self.animal.name}?',
+                                     QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No,
+                                     QMessageBox.StandardButton.No)
 
         if reply == QMessageBox.StandardButton.Yes:
             try:
@@ -78,11 +86,11 @@ class AnimalDetailWindow(QtWidgets.QMainWindow):
                 if result:
                     QMessageBox.information(self, "Éxito",
                                             "Animal eliminado correctamente")
-                    self.parent.load_animals()  # Recargar lista en ventana principal
-                    self.parent.show()
-                    self.close()
+                    self.parent_window.load_animals()  # Recargar lista en ventana principal
+                    self.hide()  # Hide instead of close
+                    self.parent_window.show()
                 else:
                     QMessageBox.critical(self, "Error",
-                                        "No se pudo eliminar el animal. Puede que esté asociado a tratamientos o recetas.")
+                                         "No se pudo eliminar el animal. Puede que esté asociado a tratamientos o recetas.")
             except Exception as e:
                 QMessageBox.critical(self, "Error", f"Error al eliminar animal: {str(e)}")

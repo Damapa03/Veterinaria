@@ -11,11 +11,16 @@ class AnimalEditWindow(QtWidgets.QMainWindow):
 
     def __init__(self, parent=None, animal=None):
         super().__init__()
-        self.parent = parent
+        self.parent_window = parent  # Consistent naming with detail window
         self.animal = animal
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/animal_editar.ui')
-        uic.loadUi(ui_path, self)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/animal_editar.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
 
         # Inicializar repositorio
         self.animalRepository = AnimalRepository()
@@ -57,7 +62,6 @@ class AnimalEditWindow(QtWidgets.QMainWindow):
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Error al cargar la lista de clientes: {str(e)}")
 
-
     def set_current_client(self, client_id):
         """Establecer el valor actual en el comboBox basado en el ID del cliente"""
         try:
@@ -76,8 +80,9 @@ class AnimalEditWindow(QtWidgets.QMainWindow):
 
     def on_volver_clicked(self):
         """Volver a la pantalla de detalles"""
-        self.parent.show()
-        self.close()
+        if self.parent_window:
+            self.parent_window.show()
+        self.hide()  # Hide instead of close to prevent issues
 
     def on_guardar_clicked(self):
         """Guardar los cambios realizados al animal"""
@@ -113,16 +118,17 @@ class AnimalEditWindow(QtWidgets.QMainWindow):
                                         "Animal actualizado correctamente")
 
                 # Actualizar animal en la ventana padre
-                self.parent.animal = updated_animal
-                self.parent.display_animal_info()
+                if self.parent_window:
+                    self.parent_window.animal = updated_animal
+                    self.parent_window.display_animal_info()
 
-                # Recargar lista en ventana principal si existe
-                if hasattr(self.parent, 'parent') and self.parent.parent:
-                    self.parent.parent.load_animals()
+                    # Recargar lista en ventana principal si existe
+                    if hasattr(self.parent_window, 'parent_window') and self.parent_window.parent_window:
+                        self.parent_window.parent_window.load_animals()
 
-                # Volver a la pantalla de detalles
-                self.parent.show()
-                self.close()
+                    # Volver a la pantalla de detalles
+                    self.parent_window.show()
+                self.hide()  # Hide instead of close
             else:
                 QMessageBox.critical(self, "Error",
                                      "No se pudo actualizar el animal")

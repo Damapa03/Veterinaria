@@ -11,11 +11,16 @@ class ClinicaCreateWindow(QtWidgets.QMainWindow):
     """Ventana para crear una nueva clínica"""
 
     def __init__(self, parent=None):
-        super().__init__()
-        self.parent = parent
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/clinicas_crear.ui')
-        uic.loadUi(ui_path, self)
+        super().__init__(parent)
+        self.parent_window = parent
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/clinicas_crear.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
 
         # Inicializar repositorio
         self.clinicaRepository = ClinicaRepository()
@@ -29,7 +34,8 @@ class ClinicaCreateWindow(QtWidgets.QMainWindow):
 
     def on_volver_clicked(self):
         """Volver a la pantalla principal"""
-        self.parent.show()
+        if self.parent_window:
+            self.parent_window.show()
         self.close()
 
     def on_aceptar_clicked(self):
@@ -60,8 +66,9 @@ class ClinicaCreateWindow(QtWidgets.QMainWindow):
             if result:
                 QMessageBox.information(self, "Éxito",
                                         "Clínica creada correctamente")
-                self.parent.load_clinicas()  # Recargar lista en ventana principal
-                self.parent.show()
+                if self.parent_window:
+                    self.parent_window.load_clinicas()  # Recargar lista en ventana principal
+                    self.parent_window.show()
                 self.close()
             else:
                 QMessageBox.critical(self, "Error",

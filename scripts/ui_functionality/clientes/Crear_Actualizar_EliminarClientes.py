@@ -8,10 +8,15 @@ class CreateForm(QWidget):
         super().__init__()
         self.parent = parent
         
-        # Cargar archivo UI usando ruta relativa al script
+
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(os.path.dirname(os.path.dirname(script_dir)), 'ui', 'pantalla_crearCliente.ui')
-        uic.loadUi(ui_path, self)
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/pantalla_crearCliente.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
         
         self.setWindowTitle('Crear Cliente')
         
@@ -68,11 +73,15 @@ class UpdateForm(QWidget):
         self.parent = parent
         self.row = row
         self.client_data = parent.clients[row]
-        
-        # Cargar archivo UI usando ruta relativa al script
+
         script_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(os.path.dirname(os.path.dirname(script_dir)), 'ui', 'pantalla_actualizarEliminarCliente.ui')
-        uic.loadUi(ui_path, self)
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/pantalla_actualizarEliminarCliente.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
         
         self.setWindowTitle('Actualizar/Eliminar Cliente')
         

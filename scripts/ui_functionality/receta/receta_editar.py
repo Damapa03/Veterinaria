@@ -11,12 +11,19 @@ class RecetaEditWindow(QtWidgets.QMainWindow):
     """Ventana para editar una receta médica existente"""
 
     def __init__(self, parent=None, receta_id=None):
-        super().__init__()
-        self.parent = parent
+        # Properly pass the parent to the QMainWindow constructor
+        super().__init__(parent)
+        self.parent_window = parent  # Store parent reference with a clearer name
         self.receta_id = receta_id
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/recetas_editar.ui')
-        uic.loadUi(ui_path, self)
+
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/recetas_editar.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
 
         # Inicializar repositorio
         self.recetaRepository = RecetaRepository()
@@ -111,7 +118,8 @@ class RecetaEditWindow(QtWidgets.QMainWindow):
 
     def on_volver_clicked(self):
         """Volver a la pantalla principal"""
-        self.parent.show()
+        if self.parent_window:
+            self.parent_window.show()
         self.close()
 
     def on_guardar_clicked(self):
@@ -139,14 +147,13 @@ class RecetaEditWindow(QtWidgets.QMainWindow):
             )
 
             # Actualizar en la base de datos
-            result = self.recetaRepository.putReceta(receta.id,receta)
+            result = self.recetaRepository.putReceta(receta.id, receta)
 
             if result:
                 QMessageBox.information(self, "Éxito",
                                         "Receta médica actualizada correctamente")
-                self.parent.parent.load_recetas()  # Recargar lista en ventana principal
-                self.parent.parent.show()
-                self.parent.close()
+                if self.parent_window:
+                    self.parent_window.show()
                 self.close()
             else:
                 QMessageBox.critical(self, "Error",

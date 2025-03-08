@@ -14,11 +14,18 @@ from scripts.ui_functionality.clinica.clinica_information import ClinicaDetailWi
 class ClinicasMainWindow(QtWidgets.QMainWindow):
     """Ventana principal para la gestión de clínicas"""
 
-    def __init__(self):
-        super().__init__()
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/clinicas_main.ui')
-        uic.loadUi(ui_path, self)
+    def __init__(self, parent = None):
+        super().__init__(parent)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/clinicas_main.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
+
+        self.parent_window = self.parent()
 
         # Inicializar repositorio
         self.clinicaRepository = ClinicaRepository()
@@ -115,21 +122,5 @@ class ClinicasMainWindow(QtWidgets.QMainWindow):
     def on_volver_clicked(self):
         """Volver a la pantalla anterior"""
         self.close()
-
-
-def main():
-    """Función principal para iniciar la aplicación"""
-    app = QtWidgets.QApplication(sys.argv)
-
-    # Crear conexión a la base de datos
-    db = Database()
-
-    # Crear y mostrar ventana principal
-    window = ClinicasMainWindow()
-    window.show()
-
-    sys.exit(app.exec())
-
-
-if __name__ == "__main__":
-    main()
+        if self.parent_window:
+            self.parent_window.show()

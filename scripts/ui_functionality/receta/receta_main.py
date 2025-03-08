@@ -2,7 +2,7 @@ import os
 import sys
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtCore import Qt
-from PyQt6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QFrame
+from PyQt6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QFrame, QMessageBox
 
 from scripts.DAO import Database
 from scripts.model.Receta import Receta
@@ -14,11 +14,18 @@ from scripts.ui_functionality.receta.receta_informacion import RecetaDetailWindo
 class RecetasMainWindow(QtWidgets.QMainWindow):
     """Ventana principal para la gestión de recetas médicas"""
 
-    def __init__(self):
-        super().__init__()
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/recetas_main.ui')
-        uic.loadUi(ui_path, self)
+    def __init__(self, parent = None):
+        super().__init__(parent)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/recetas_main.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
+
+        self.parent_window = self.parent()
 
         # Inicializar repositorio
         self.recetaRepository = RecetaRepository()
@@ -166,21 +173,6 @@ class RecetasMainWindow(QtWidgets.QMainWindow):
     def on_volver_clicked(self):
         """Volver a la pantalla anterior"""
         self.close()
+        if self.parent_window:
+            self.parent_window.show()
 
-
-def main():
-    """Función principal para iniciar la aplicación"""
-    app = QtWidgets.QApplication(sys.argv)
-
-    # Crear conexión a la base de datos
-    db = Database()
-
-    # Crear y mostrar ventana principal
-    window = RecetasMainWindow()
-    window.show()
-
-    sys.exit(app.exec())
-
-
-if __name__ == "__main__":
-    main()

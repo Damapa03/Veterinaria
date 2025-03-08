@@ -12,14 +12,14 @@ class RecetaDetailWindow(QtWidgets.QMainWindow):
     """Ventana para mostrar detalles de una receta médica"""
 
     def __init__(self, parent=None, receta=None):
-        super().__init__()
-        self.parent = parent
+        # Properly pass the parent to the QMainWindow constructor
+        super().__init__(parent)
+        self.parent_window = parent  # Store parent reference with a clearer name
         self.receta = receta
-        current_dir = os.path.dirname(os.path.abspath(__file__))
 
-        # Cargar archivo UI
-        ui_path = os.path.join(current_dir, '../../../ui/recetas_information.ui')
-
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/recetas_information.ui')
         try:
             uic.loadUi(ui_path, self)
         except Exception as e:
@@ -51,14 +51,15 @@ class RecetaDetailWindow(QtWidgets.QMainWindow):
             # Mostrar estado de finalización
             estado = "Finalizada" if self.receta.finalized else "En curso"
             self.finalizedLabel.setText(f"Estado: {estado}")
-            self.animalName = self.animalRepository.getAnimalName(self.receta.pacient)[0] #Saca el nombre
+            self.animalName = self.animalRepository.getAnimalName(self.receta.pacient)[0]  # Saca el nombre
             self.pacientLabel.setText(f"Paciente: {self.animalName}")
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Error al mostrar información: {str(e)}")
 
     def on_volver_clicked(self):
         """Volver a la pantalla principal"""
-        self.parent.show()
+        if self.parent_window:
+            self.parent_window.show()
         self.close()
 
     def on_modificar_clicked(self):
@@ -82,8 +83,9 @@ class RecetaDetailWindow(QtWidgets.QMainWindow):
                 if result:
                     QMessageBox.information(self, "Éxito",
                                             "Receta eliminada correctamente")
-                    self.parent.load_recetas()  # Recargar lista en ventana principal
-                    self.parent.show()
+                    if self.parent_window:
+                        self.parent_window.load_recetas()  # Recargar lista en ventana principal
+                        self.parent_window.show()
                     self.close()
                 else:
                     QMessageBox.critical(self, "Error",

@@ -1,7 +1,7 @@
 import os
 import sys
 from PyQt6 import QtWidgets, uic
-from PyQt6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QFrame
+from PyQt6.QtWidgets import QHBoxLayout, QLabel, QPushButton, QFrame, QMessageBox
 
 from scripts.DAO import Database
 from scripts.model.Animal import Animal
@@ -13,11 +13,19 @@ from scripts.ui_functionality.animal.animal_informacion import AnimalDetailWindo
 class AnimalsMainWindow(QtWidgets.QMainWindow):
     """Ventana principal para la gestión de animales"""
 
-    def __init__(self):
-        super().__init__()
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/animal_main.ui')
-        uic.loadUi(ui_path, self)
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/animal_main.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
+
+        # Store the parent window reference explicitly
+        self.parent_window = parent
 
         # Inicializar repositorio
         self.animalRepository = AnimalRepository()
@@ -161,22 +169,6 @@ class AnimalsMainWindow(QtWidgets.QMainWindow):
 
     def on_volver_clicked(self):
         """Volver a la pantalla anterior"""
-        self.close()
-
-
-def main():
-    """Función principal para iniciar la aplicación"""
-    app = QtWidgets.QApplication(sys.argv)
-
-    # Crear conexión a la base de datos
-    db = Database()
-
-    # Crear y mostrar ventana principal
-    window = AnimalsMainWindow()
-    window.show()
-
-    sys.exit(app.exec())
-
-
-if __name__ == "__main__":
-    main()
+        self.hide()  # Hide instead of close to prevent destruction
+        if self.parent_window:
+            self.parent_window.show()

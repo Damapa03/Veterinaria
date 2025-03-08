@@ -1,6 +1,6 @@
-from DAO import Database
+from scripts.DAO import Database
 import sqlite3
-from model.Cliente import Cliente
+from scripts.model.Cliente import Cliente
 
 class ClienteRepository:
     def __init__(self):
@@ -19,6 +19,34 @@ class ClienteRepository:
             col_names = [desc[0] for desc in self.db.cursor.description]
             return dict(zip(col_names, row))
         return None
+
+    def getClienteName(self, dni: str):
+        self.db.cursor.execute("SELECT name FROM Clientes WHERE DNI = ?", (dni,))
+        row = self.db.cursor.fetchone()
+        if row:
+            col_names = [desc[0] for desc in self.db.cursor.description]
+            return dict(zip(col_names, row))
+        return None
+
+    def getClientesNameAndId(self):
+        self.db.cursor.execute("SELECT dni,name FROM Clientes",)
+        return self.db.cursor.fetchall()
+
+    def getAnimalsFilter(self, name: str, species: str, owner: str):
+        name_param = name if name else "%"
+        species_param = species if species else "%"
+        owner_param = owner if owner else "%"
+
+        self.db.cursor.execute("""
+               SELECT a.id, a.name, a.species, a.description, a.owner FROM Animales a 
+               JOIN Clientes c ON a.owner = c.DNI
+               WHERE (? = '%' OR a.name LIKE ?)
+               AND (? = '%' OR a.species LIKE ?)
+               AND (? = '%' OR c.name LIKE ?)
+           """, (name_param, name_param, species_param, species_param, owner_param, owner_param))
+
+        result = self.db.cursor.fetchall()
+        return result
     
     def postCliente(self, cliente: Cliente):
         try:

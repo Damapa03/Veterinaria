@@ -14,9 +14,16 @@ class VeterinarioEditWindow(QtWidgets.QMainWindow):
     def __init__(self, parent=None, veterinario=None):
         super().__init__(parent)
         # Cargar archivo UI
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/veterinarios_editar.ui')
-        uic.loadUi(ui_path, self)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/veterinarios_editar.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
+
+
 
         # Guardar referencia a la ventana padre y objeto veterinario
         self.parent_window = parent

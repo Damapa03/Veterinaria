@@ -14,9 +14,14 @@ class ClinicaEditWindow(QtWidgets.QMainWindow):
         super().__init__()
         self.parent = parent
         self.clinica = clinica
-        current_dir = os.path.dirname(os.path.abspath(__file__))
-        ui_path = os.path.join(current_dir, '../../../ui/clinicas_editar.ui')
-        uic.loadUi(ui_path, self)
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+        ui_path = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(script_dir))),
+                               'ui/clinicas_editar.ui')
+        try:
+            uic.loadUi(ui_path, self)
+        except Exception as e:
+            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
+            return
 
         # Inicializar repositorio
         self.clinicaRepository = ClinicaRepository()
