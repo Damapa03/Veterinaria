@@ -23,6 +23,23 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: lightgray;
+    color: black;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: silver;
+}
+
+QPushButton:pressed {
+    background-color: darkgray;
+}</string>
+    </property>
     <property name="text">
      <string>Volver</string>
     </property>
@@ -36,6 +53,23 @@
       <height>51</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: lightgreen;
+    color: Black;
+    border: 2px solid #006400;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: #00b300;
+}
+
+QPushButton:pressed {
+    background-color: #004d00;
+}</string>
+    </property>
     <property name="text">
      <string>Modificar</string>
     </property>
@@ -48,6 +82,23 @@
       <width>131</width>
       <height>51</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: #ff5e5e;
+    color: black;
+    border: 2px solid #8B0000;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: #df5252;
+}
+
+QPushButton:pressed {
+    background-color: #cc0000;
+}</string>
     </property>
     <property name="text">
      <string>Borrar</string>
@@ -68,7 +119,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_4">
          <item>
-          <widget class="QLabel" name="name">
+          <widget class="QLabel" name="nameLabel">
            <property name="text">
             <string>Nombre de la Clínica</string>
            </property>
@@ -110,7 +161,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
          <item>
-          <widget class="QLabel" name="municipio">
+          <widget class="QLabel" name="municipioLabel">
            <property name="text">
             <string>Municipio</string>
            </property>
@@ -121,7 +172,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_6">
          <item>
-          <widget class="QLabel" name="provincia">
+          <widget class="QLabel" name="provinciaLabel">
            <property name="text">
             <string>Provincia</string>
            </property>

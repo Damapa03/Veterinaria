@@ -45,8 +45,8 @@ class ClinicaEditWindow(QtWidgets.QMainWindow):
 
     def on_volver_clicked(self):
         """Volver a la pantalla de detalles"""
-        self.parent.show()
         self.close()
+        self.parent.show()
 
     def on_guardar_clicked(self):
         """Guardar los cambios realizados a la clínica"""
@@ -76,17 +76,10 @@ class ClinicaEditWindow(QtWidgets.QMainWindow):
             if result:
                 QMessageBox.information(self, "Éxito",
                                         "Clínica actualizada correctamente")
-
-                # Actualizar clínica en la ventana padre
-                self.parent.clinica = updated_clinica
-                self.parent.display_clinica_info()
-
-                # Recargar lista en ventana principal
-                self.parent.parent.load_clinicas()
-
+                
                 # Volver a la pantalla de detalles
-                self.parent.show()
                 self.close()
+                self.parent.show()
             else:
                 QMessageBox.critical(self, "Error",
                                      "No se pudo actualizar la clínica")

@@ -3,11 +3,15 @@ import sys
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import QMessageBox, QApplication
 import scripts.Autentication as auth
+from PyQt6.QtGui import QIcon
+
+from scripts.ui_functionality.menu import MenuMainWindow
 
 class LoginWindow(QtWidgets.QMainWindow):
     def __init__(self):
         super().__init__()
         uic.loadUi('ui/login.ui', self)
+        self.setWindowIcon(QIcon("assets/VeterinariaD3PLogo.jpg"))
 
         # Connect the bottom label to switch to registration window
         self.passwordLabel_2.mousePressEvent = self.switch_to_register
@@ -32,9 +36,9 @@ class LoginWindow(QtWidgets.QMainWindow):
             # For now, we'll just print a success message
             print("Login successful!")
             # Here you would create and show your main application window
-            # self.main_window = MainWindow()
-            # self.main_window.show()
-            # self.close()
+            self.main_window = MenuMainWindow()
+            self.main_window.show()
+            self.close()
         else:
             # Show error message if login fails
             QMessageBox.warning(self, "Error", "Las credenciales son incorrectas")

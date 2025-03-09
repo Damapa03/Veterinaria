@@ -63,12 +63,12 @@ CREATE TABLE IF NOT EXISTS Cita (
 );
 
 -- Ejemplo Clinicas
-INSERT INTO Clinicas (Municipio, Provincia, name) VALUES
-('Madrid', 'Madrid', 'VetCare Central'),
-('Barcelona', 'Barcelona', 'PetHealth Barcelona');
+INSERT OR IGNORE INTO Clinicas (id, Municipio, Provincia, name) VALUES
+(1,'Madrid', 'Madrid', 'VetCare Central'),
+(2,'Barcelona', 'Barcelona', 'PetHealth Barcelona');
 
 -- Ejemplo Veterinarios
-INSERT INTO Veterinario (DNI, name, surname, email, telephone, password, location) VALUES
+INSERT OR IGNORE INTO Veterinario (DNI, name, surname, email, telephone, password, location) VALUES
 ('12345678A', 'Ana', 'Garcia', 'ana.garcia@vetclinic.com', '612345678', 'securepass123', 1),
 ('87654321B', 'Carlos', 'Lopez', 'carlos.lopez@vetclinic.com', '687654321', 'mypassword456', 2);
 
@@ -78,19 +78,19 @@ INSERT OR IGNORE INTO Clientes (DNI, name, surname, email, telephone) VALUES
 ('22222222Y', 'Juan', 'Fernandez', 'juan@email.com', '622222222');
 
 -- Ejemplo Animales
-INSERT INTO Animales (name, species, description, owner) VALUES
-('Luna', 'Perro', 'Labrador retriever de color negro, 5 anyos de edad', '11111111X'),
-('Max', 'Gato', 'Gato siames de 3 años, vacunas al día', '11111111X'),
-('Toby', 'Perro', 'Yorkshire terrier de 2 años, castrado', '22222222Y');
+INSERT OR IGNORE INTO Animales (id, name, species, description, owner) VALUES
+(1,'Luna', 'Perro', 'Labrador retriever de color negro, 5 anyos de edad', '11111111X'),
+(2,'Max', 'Gato', 'Gato siames de 3 anyos, vacunas al día', '11111111X'),
+(3,'Toby', 'Perro', 'Yorkshire terrier de 2 anyos, castrado', '22222222Y');
 
 -- Ejemplo Recetas
-INSERT INTO Recetas (treatment, start_date, finalized, pacient) VALUES
-('Antibiotico Amoxicilina', '2025-01-15', TRUE, 1),
-('Antiparasitario', '2025-02-10', FALSE, 2),
-('Antiinflamatorio', '2025-02-05', TRUE, 3);
+INSERT OR IGNORE INTO Recetas (id, treatment, start_date, finalized, pacient) VALUES
+(1,'Antibiotico Amoxicilina', '2025-01-15', TRUE, 1),
+(2,'Antiparasitario', '2025-02-10', FALSE, 2),
+(3,'Antiinflamatorio', '2025-02-05', TRUE, 3);
 
 -- Ejemplo Citas
-INSERT INTO Cita (date, price, reason, animal, professional) VALUES
-('2025-01-15', 50.00, 'Consulta por infeccion cutánea', 1, '12345678A'),
-('2025-02-10', 35.00, 'Revision y vacunación anual', 2, '87654321B'),
-('2025-02-05', 65.00, 'Tratamiento dental y limpieza', 3, '12345678A');
+INSERT OR IGNORE INTO Cita (id, date, price, reason, animal, professional) VALUES
+(1,'2025-01-15', 50.00, 'Consulta por infeccion cutanea', 1, '12345678A'),
+(2,'2025-02-10', 35.00, 'Revision y vacunacion anual', 2, '87654321B'),
+(3,'2025-02-05', 65.00, 'Tratamiento dental y limpieza', 3, '12345678A');

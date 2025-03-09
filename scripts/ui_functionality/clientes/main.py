@@ -3,7 +3,7 @@ import sqlite3
 import os
 from PyQt6 import QtWidgets, uic
 from PyQt6.QtWidgets import (
-    QApplication, QWidget, QMessageBox, QDialog, QVBoxLayout, QTableWidget,
+    QApplication, QMainWindow, QMessageBox, QDialog, QVBoxLayout, QTableWidget,
     QTableWidgetItem, QLabel
 )
 from PyQt6.QtGui import QStandardItemModel, QStandardItem
@@ -35,7 +35,7 @@ class AnimalSearchDialog(QDialog):
 
         self.setLayout(layout)
 
-class ClientesMainWindow(QWidget):
+class ClientesMainWindow(QMainWindow):
     def __init__(self, parent = None):
         super().__init__(parent)
         script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -64,10 +64,14 @@ class ClientesMainWindow(QWidget):
         # Conectar señales a slots
         self.botonCliente.clicked.connect(self.openCreateForm)
         self.tableViewClientes.doubleClicked.connect(self.openUpdateForm)
-        self.botonRegresar.clicked.connect(self.close)
+        self.botonRegresar.clicked.connect(self.toMenu)
 
         # Conectar el botón filtra_animales ya existente en el UI
         self.filtra_animales.clicked.connect(self.searchAnimals)
+
+    def toMenu(self):
+        self.parent().show()
+        self.close()
 
     def setupTableView(self):
         self.model = QStandardItemModel()

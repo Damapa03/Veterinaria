@@ -24,7 +24,7 @@
     <item>
      <layout class="QHBoxLayout" name="horizontalLayout">
       <item>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="backButton">
         <property name="styleSheet">
          <string notr="true">QPushButton {
     background-color: lightgray;
@@ -43,7 +43,7 @@ QPushButton:pressed {
 }</string>
         </property>
         <property name="text">
-         <string>PushButton</string>
+         <string>Volver</string>
         </property>
        </widget>
       </item>

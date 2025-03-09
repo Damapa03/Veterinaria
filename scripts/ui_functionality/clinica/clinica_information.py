@@ -34,8 +34,8 @@ class ClinicaDetailWindow(QtWidgets.QMainWindow):
 
         # Conectar señales de botones
         self.volverButton.clicked.connect(self.on_volver_clicked)
-        self.editarButton.clicked.connect(self.on_editar_clicked)
-        self.eliminarButton.clicked.connect(self.on_eliminar_clicked)
+        self.modificarButton.clicked.connect(self.on_editar_clicked)
+        self.borrarButton.clicked.connect(self.on_eliminar_clicked)
 
     def load_clinica_data(self):
         """Cargar y mostrar los datos de la clínica"""

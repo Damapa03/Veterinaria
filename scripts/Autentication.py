@@ -16,7 +16,7 @@ config = {
     "databaseURL": "https://veterinaria-1188a-default-rtdb.europe-west1.firebasedatabase.app/"
 }
 
-cred = credentials.Certificate("certs/veterinaria-1188a-firebase-adminsdk-fbsvc-88ed367b95.json")
+cred = credentials.Certificate("certs/veterinaria-1188a-firebase-adminsdk-fbsvc-906853e7f8.json")
 firebase_admin.initialize_app(cred)
 # Inicializar Pyrebase
 pyrebase_config = pyrebase.initialize_app(config)

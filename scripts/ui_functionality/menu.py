@@ -2,6 +2,7 @@ import os
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QStackedWidget
 from PyQt6 import uic
+from PyQt6.QtGui import QIcon
 
 from scripts.ui_functionality.receta.receta_main import RecetasMainWindow
 from scripts.ui_functionality.Cita.Citasui import CitaMainWindow
@@ -14,7 +15,7 @@ from scripts.ui_functionality.veterinario.veterinario_main import VeterinariosMa
 class MenuMainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-
+        self.setWindowIcon(QIcon("assets/VeterinariaD3PLogo.jpg"))
         script_dir = os.path.dirname(os.path.abspath(__file__))
 
         project_root = os.path.dirname(os.path.dirname(script_dir))

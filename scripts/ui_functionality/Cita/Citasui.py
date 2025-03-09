@@ -1,10 +1,9 @@
-import os
 from datetime import date
 import sys
-from PyQt6 import uic
-from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
-                             QHBoxLayout, QGridLayout, QLabel, QScrollArea,
-                             QPushButton, QSpinBox, QFrame, QSizePolicy, QMessageBox)
+from PyQt6 import QtWidgets, uic
+from PyQt6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
+                             QHBoxLayout, QGridLayout, QLabel, QScrollArea, 
+                             QPushButton, QSpinBox, QFrame, QSizePolicy)
 from PyQt6.QtCore import Qt, QDateTime
 from PyQt6.QtGui import QFont
 
@@ -86,94 +85,64 @@ class TarjetaCita(QFrame):
         btn_layout.addWidget(btn_editar)
         layout.addLayout(btn_layout)
 
-
 class EditarCitaWindow(QWidget):
     def __init__(self, cita=None, on_guardar=None, is_new=False):
         super().__init__()
         self.cita = cita
         self.is_new = is_new
         self.on_guardar = on_guardar
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-
-        project_root = os.path.dirname(os.path.dirname(os.path.dirname((script_dir))))
-        ui_path = os.path.join(project_root, 'ui', 'cita_edit.ui')
-
-        try:
-            uic.loadUi(ui_path, self)
-        except Exception as e:
-            QMessageBox.critical(None, "Error", f"Error al cargar UI: {str(e)}")
-            return
+        self.ui = uic.loadUi("ui/cita_edit.ui", self)
         self.cargarDatos()
         self.conectarBotones()
-
+        
     def cargarDatos(self):
         if self.cita:
-            # Change self.ui.editMotivo to self.editMotivo
-            self.editMotivo.setText(self.cita["motivo"])
-
-            # Change self.ui.editAnimal to self.editAnimal
-            self.editAnimal.clear()
+            self.ui.editMotivo.setText(self.cita["motivo"])
+            
+            self.ui.editAnimal.clear()
             animales = repository().getAnimal()
             for animal in animales:
-                self.editAnimal.addItem(animal[1], animal[0])
+                self.ui.editAnimal.addItem(animal[1], animal[0])
 
-            # Change self.ui.editProfesional to self.editProfesional
-            self.editProfesional.clear()
+            self.ui.editProfesional.clear()
             profesionales = repository().getVetarinarioNombreDNI()
             for profesional in profesionales:
-                self.editProfesional.addItem(profesional[1], profesional[0])
-
-            # Change self.ui.editFecha to self.editFecha
-            self.editFecha.setDateTime(QDateTime.fromString(self.cita["fecha"], "yyyy-MM-dd hh:mm"))
-
-            # Change self.ui.editPrecio to self.editPrecio
-            self.editPrecio.setValue(self.cita["precio"])
-
+                self.ui.editProfesional.addItem(profesional[1], profesional[0])
+                
+            self.ui.editFecha.setDateTime(QDateTime.fromString(self.cita["fecha"], "yyyy-MM-dd hh:mm"))
+            self.ui.editPrecio.setValue(self.cita["precio"])
+    
     def conectarBotones(self):
-        # Change self.ui.btnGuardar to self.btnGuardar
-        self.btnGuardar.clicked.connect(self.guardar)
-
-        # Change self.ui.btnCancelar to self.btnCancelar
-        self.btnCancelar.clicked.connect(self.close)
-
+        self.ui.btnGuardar.clicked.connect(self.guardar)
+        self.ui.btnCancelar.clicked.connect(self.close)
+    
     def guardar(self):
         cita_actualizada = {
             "id": self.cita["id"],
-            # Change self.ui.editMotivo to self.editMotivo, etc.
-            "motivo": self.editMotivo.text(),
-            "animal": self.editAnimal.currentData(),
-            "profesional": self.editProfesional.currentData(),
-            "fecha": self.editFecha.dateTime().toString("yyyy-MM-dd hh:mm"),
-            "precio": self.editPrecio.value()
+            "motivo": self.ui.editMotivo.text(),
+            "animal": self.ui.editAnimal.currentData(),
+            "profesional": self.ui.editProfesional.currentData(),
+            "fecha": self.ui.editFecha.dateTime().toString("yyyy-MM-dd hh:mm"),
+            "precio": self.ui.editPrecio.value()
         }
         self.on_guardar(cita_actualizada)
         postCita = Cita(
-            fecha=cita_actualizada["fecha"],
-            precio=cita_actualizada["precio"],
-            motivo=cita_actualizada["motivo"],
-            animal=cita_actualizada["animal"],
-            profesional=cita_actualizada["profesional"]
+            fecha= cita_actualizada["fecha"],
+            precio= cita_actualizada["precio"],
+            motivo= cita_actualizada["motivo"],
+            animal= cita_actualizada["animal"],
+            profesional= cita_actualizada["profesional"]
         )
         if self.is_new:
             repository().postCita(postCita)
-        self.close()
+        self.close()     
 
 
-class CitaMainWindow(QMainWindow):
-    def __init__(self, parent = None):
+class CitaMainWindow(QtWidgets.QMainWindow):
+    def __init__(self,parent=None):
         super().__init__(parent)
-        script_dir = os.path.dirname(os.path.abspath(__file__))
-
-        project_root = os.path.dirname(os.path.dirname(os.path.dirname((script_dir))))
-        ui_path = os.path.join(project_root, 'ui', 'cita.ui')
-
-        self.parent_window = self.parent()
-
-        if not os.path.exists(ui_path):
-            raise FileNotFoundError(f"UI file not found at path: {ui_path}")
-
-
-        uic.loadUi(ui_path, self)
+        self.parentWindow = parent
+        uic.loadUi("ui/cita.ui", self)
         self.citas = self.CitaDictionary()
         self.initUI()
     
@@ -199,6 +168,8 @@ class CitaMainWindow(QMainWindow):
         self.setWindowTitle("Citas Veterinarias")
         
         self.spinColumnas.valueChanged.connect(self.actualizarGrid)
+
+        self.backButton.clicked.connect(self.toMenu)
         
         self.btnNuevaCita.clicked.connect(self.nuevaCita)
        
@@ -210,6 +181,10 @@ class CitaMainWindow(QMainWindow):
         
         self.actualizarGrid()
     
+    def toMenu(self):
+        self.close()
+        self.parentWindow.show()
+        
     def actualizarGrid(self):
         # Limpiar el grid actual
         while self.grid_layout.count():
