@@ -153,6 +153,8 @@ class RecetaEditWindow(QtWidgets.QMainWindow):
                 QMessageBox.information(self, "Éxito",
                                         "Receta médica actualizada correctamente")
                 if self.parent_window:
+                    #Esto es lo nuevo
+                    self.parent_window.parent_window.load_recetas()
                     self.parent_window.show()
                 self.close()
             else:
