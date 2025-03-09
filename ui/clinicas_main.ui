@@ -36,6 +36,23 @@
       <height>41</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: lightgray;
+    color: black;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: silver;
+}
+
+QPushButton:pressed {
+    background-color: darkgray;
+}</string>
+    </property>
     <property name="text">
      <string>Volver</string>
     </property>

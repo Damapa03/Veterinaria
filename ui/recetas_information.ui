@@ -53,6 +53,23 @@ QPushButton:pressed {
       <height>51</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: lightgreen;
+    color: Black;
+    border: 2px solid #006400;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: #00b300;
+}
+
+QPushButton:pressed {
+    background-color: #004d00;
+}</string>
+    </property>
     <property name="text">
      <string>Modificar</string>
     </property>

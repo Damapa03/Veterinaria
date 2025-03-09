@@ -23,6 +23,23 @@
       <height>51</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: lightgray;
+    color: black;
+    border: 2px solid gray;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: silver;
+}
+
+QPushButton:pressed {
+    background-color: darkgray;
+}</string>
+    </property>
     <property name="text">
      <string>Volver</string>
     </property>
@@ -35,6 +52,24 @@
       <width>211</width>
       <height>61</height>
      </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+    background-color: lightgreen;
+    color: Black;
+    border: 2px solid #006400;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: #00b300;
+}
+
+QPushButton:pressed {
+    background-color: #004d00;
+}
+</string>
     </property>
     <property name="text">
      <string>Aceptar</string>

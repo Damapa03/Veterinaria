@@ -25,8 +25,8 @@ class CreateForm(QWidget):
         self.buttonRegresar.clicked.connect(self.returnToMainScreen)
     
     def returnToMainScreen(self):
-        self.parent.show()
         self.close()
+        self.parent.show()
     
     def createClient(self):
         dni = self.textEditDni.toPlainText().strip()
@@ -58,8 +58,8 @@ class CreateForm(QWidget):
         result = self.parent.addClient(client_data)
         if result is True:
             QMessageBox.information(self, "Éxito", "Cliente creado correctamente")
-            self.parent.show()
             self.close()
+            self.parent.show()
         else:
             # Mostrar el mensaje de error específico
             error_msg = "No se pudo crear el cliente"
@@ -93,8 +93,8 @@ class UpdateForm(QWidget):
         self.buttonRegresar.clicked.connect(self.returnToMainScreen)
     
     def returnToMainScreen(self):
-        self.parent.show()
         self.close()
+        self.parent.show()
     
     def fillClientData(self):
         self.textEditDniActualizar.setText(self.client_data[0])
@@ -133,8 +133,8 @@ class UpdateForm(QWidget):
         result = self.parent.updateClient(self.row, client_data)
         if result is True:
             QMessageBox.information(self, "Éxito", "Cliente actualizado correctamente")
-            self.parent.show()
             self.close()
+            self.parent.show()
         else:
             # Mostrar el mensaje de error específico
             error_msg = "No se pudo actualizar el cliente"
@@ -152,8 +152,8 @@ class UpdateForm(QWidget):
             result = self.parent.deleteClient(self.row)
             if result is True:
                 QMessageBox.information(self, "Éxito", "Cliente eliminado correctamente")
-                self.parent.show()
                 self.close()
+                self.parent.show()
             else:
                 # Mostrar el mensaje de error específico
                 error_msg = "No se pudo eliminar el cliente"
